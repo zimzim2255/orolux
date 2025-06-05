@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Thank You | OROLUX</title>
+  <%- include('partials/head') %>
+  <style>
+    .success-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 6rem 2rem 4rem;
+      text-align: center;
+    }
+
+    .success-content {
+      background: white;
+      padding: 3rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+      margin-bottom: 2rem;
+    }
+
+    .checkmark {
+      color: #28a745;
+      font-size: 4rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .success-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.5rem;
+      color: #1a1a1a;
+      margin-bottom: 1rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+
+    .success-message {
+      font-size: 1.1rem;
+      color: #666;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+
+    .home-btn {
+      display: inline-block;
+      padding: 1rem 2rem;
+      background: #0a2440;
+      color: #ffffff;
+      text-decoration: none;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .home-btn:hover {
+      background: #1a4275;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    @media (max-width: 640px) {
+      .success-container {
+        padding: 4rem 1rem 2rem;
+      }
+
+      .success-content {
+        padding: 2rem;
+      }
+
+      .success-title {
+        font-size: 2rem;
+      }
+
+      .checkmark {
+        font-size: 3rem;
+      }
+    }
+  </style>
+</head>
+<body class="font-sans antialiased">
+  <%- include('partials/header') %>
+  
+  <div class="success-container">
+    <div class="success-content">
+      <i class="fas fa-check-circle checkmark"></i>
+      <h2 class="success-title">Thank You!</h2>
+      <p class="success-message">We've received your message and will get back to you soon. Our team typically responds within 24-48 hours during business days.</p>
+      <a href="/" class="home-btn">
+        <i class="fas fa-home" style="margin-right: 0.5rem;"></i>
+        Back to Home
+      </a>
+    </div>
+  </div>
+
+  <%- include('partials/footer') %>
+</body>
+</html>

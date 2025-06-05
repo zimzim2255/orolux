@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Edit Pages | Admin</title>  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Montserrat:wght@300;400&display=swap">
+  <script src="https://cdn.tiny.cloud/1/jdob5wvslviolpvgdast2czp6lmjicct6vcyqyc5c2aushtu/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+  <style>
+    :root {
+      --deep-blue: #0a2440;
+      --cream: #f0f5ff;
+      --gold: #b4c4d6;
+      --light-gray: #e0e5f0;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      min-height: 100vh;
+      background: var(--cream);
+      color: var(--deep-blue);
+      padding: 2rem;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .header {
+      background: var(--deep-blue);
+      padding: 2rem;
+      margin-bottom: 3rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .header h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.5rem;
+      font-weight: 600;
+      color: var(--cream);
+      letter-spacing: 4px;
+      margin-bottom: 0.5rem;
+    }
+
+    .page-section {
+      background: white;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .page-section h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      color: var(--deep-blue);
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid var(--light-gray);
+    }
+
+    .editor-container {
+      margin-bottom: 1.5rem;
+    }
+
+    .save-button {
+      background: var(--deep-blue);
+      color: white;
+      border: none;
+      padding: 1rem 2rem;
+      font-size: 0.9rem;
+      font-family: 'Montserrat', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .save-button:hover {
+      background: #1a4275;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .back-button {
+      display: inline-block;
+      padding: 1rem 2rem;
+      background: var(--deep-blue);
+      color: white;
+      text-decoration: none;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+      margin-top: 2rem;
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .back-button:hover {
+      background: #1a4275;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 1rem;
+      }
+
+      .header h1 {
+        font-size: 2rem;
+      }
+
+      .page-section {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <h1>Content Management</h1>
+    </header>
+
+    <div class="page-section">
+      <h2>About Us</h2>
+      <form action="/admin/pages" method="POST">
+        <input type="hidden" name="page" value="about">
+        <div class="editor-container">
+          <textarea name="content" class="editor"><%= about?.content || '' %></textarea>
+        </div>
+        <button type="submit" class="save-button">Save Changes</button>
+      </form>
+    </div>
+
+    <div class="page-section">
+      <h2>Terms & Conditions</h2>
+      <form action="/admin/pages" method="POST">
+        <input type="hidden" name="page" value="terms">
+        <div class="editor-container">
+          <textarea name="content" class="editor"><%= terms?.content || '' %></textarea>
+        </div>
+        <button type="submit" class="save-button">Save Changes</button>
+      </form>
+    </div>
+
+    <div class="page-section">
+      <h2>Contact Us</h2>
+      <form action="/admin/pages" method="POST">
+        <input type="hidden" name="page" value="contact">
+        <div class="editor-container">
+          <textarea name="content" class="editor"><%= contact?.content || '' %></textarea>
+        </div>
+        <button type="submit" class="save-button">Save Changes</button>
+      </form>
+    </div>
+
+    <a href="/admin/dashboard" class="back-button">Back to Dashboard</a>
+  </div>
+  <script>
+    tinymce.init({
+      selector: '.editor',
+      height: 500,
+      menubar: true,
+      plugins: [
+        'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
+        'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
+        'insertdatetime', 'media', 'table', 'help', 'wordcount', 'emoticons',
+        'template', 'codesample', 'hr', 'pagebreak', 'nonbreaking', 'toc',
+        'imagetools', 'quickbars', 'stylebuttons'
+      ],
+      toolbar: [
+        'undo redo | styles blocks fontfamily fontsize |',
+        'bold italic underline strikethrough forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent |',
+        'link image media table emoticons codesample | hr nonbreaking toc pagebreak |',
+        'removeformat code fullscreen preview | help'
+      ],
+      toolbar_mode: 'sliding',
+      quickbars_selection_toolbar: 'bold italic | quicklink h2 h3 blockquote',
+      contextmenu: 'link image table configurepermanentpen',
+      content_style: `
+        body {
+          font-family: 'Montserrat', sans-serif;
+          font-size: 14px;
+          line-height: 1.6;
+          color: #0a2440;
+        }
+        h1, h2, h3, h4, h5, h6 {
+          font-family: 'Cormorant Garamond', serif;
+          color: #0a2440;
+          margin: 1em 0 0.5em;
+        }
+        p { margin: 0 0 1em; }
+        a { color: #1a4275; }
+      `,
+      style_formats: [
+        { title: 'Headers', items: [
+          { title: 'Header 1', format: 'h1' },
+          { title: 'Header 2', format: 'h2' },
+          { title: 'Header 3', format: 'h3' }
+        ]},
+        { title: 'Inline', items: [
+          { title: 'Gold Text', inline: 'span', styles: { color: '#b4c4d6' } },
+          { title: 'Highlight', inline: 'span', styles: { backgroundColor: '#f0f5ff' } }
+        ]},
+        { title: 'Blocks', items: [
+          { title: 'Featured Box', block: 'div', classes: 'featured-box', styles: { 
+            padding: '20px',
+            background: '#f0f5ff',
+            borderRadius: '8px',
+            marginBottom: '20px'
+          }}
+        ]}
+      ],
+      branding: false,
+      promotion: false,
+      skin: 'oxide',
+      content_css: 'default',
+      images_upload_handler: function (blobInfo, success, failure) {
+        // Here you would typically implement image upload
+        // For now, we'll use a placeholder
+        failure('Image upload is not configured');
+      },
+      setup: function(editor) {
+        editor.on('change', function() {
+          editor.save();
+        });
+      },      templates: [
+        {
+          title: 'Product Section',
+          description: 'Adds a product section with image placeholder',
+          content: `
+            <div class="product-section" style="display: grid; grid-template-columns: 1fr 2fr; gap: 20px; margin: 20px 0; padding: 20px; background: #f0f5ff; border-radius: 8px;">
+              <div class="product-image" style="background: #ddd; min-height: 200px; display: flex; align-items: center; justify-content: center;">
+                [Insert Product Image]
+              </div>
+              <div class="product-content">
+                <h3 style="margin-top: 0;">Product Title</h3>
+                <p>Product description goes here...</p>
+                <ul>
+                  <li>Feature 1</li>
+                  <li>Feature 2</li>
+                  <li>Feature 3</li>
+                </ul>
+              </div>
+            </div>
+          `
+        },
+        {
+          title: 'Hero Section',
+          description: 'Adds a hero section with background image',
+          content: `
+            <div class="hero-section" style="position: relative; padding: 60px 20px; margin: 20px 0; background: var(--deep-blue); border-radius: 8px; color: white; text-align: center;">
+              <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; margin-bottom: 1rem;">Welcome to OROLUX</h2>
+              <p style="font-family: 'Montserrat', sans-serif; font-size: 1.1rem; max-width: 600px; margin: 0 auto;">Discover our exclusive collection of luxury timepieces</p>
+            </div>
+          `
+        },
+        {
+          title: 'Feature Grid',
+          description: 'Adds a 3-column feature grid',
+          content: `
+            <div class="feature-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin: 20px 0;">
+              <div class="feature" style="text-align: center; padding: 20px; background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                <div style="font-size: 2rem; color: var(--gold); margin-bottom: 1rem;">⭐</div>
+                <h3 style="font-family: 'Cormorant Garamond', serif; margin-bottom: 0.5rem;">Feature Title</h3>
+                <p style="color: var(--deep-blue);">Feature description goes here</p>
+              </div>
+              <div class="feature" style="text-align: center; padding: 20px; background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                <div style="font-size: 2rem; color: var(--gold); margin-bottom: 1rem;">🌟</div>
+                <h3 style="font-family: 'Cormorant Garamond', serif; margin-bottom: 0.5rem;">Feature Title</h3>
+                <p style="color: var(--deep-blue);">Feature description goes here</p>
+              </div>
+              <div class="feature" style="text-align: center; padding: 20px; background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                <div style="font-size: 2rem; color: var(--gold); margin-bottom: 1rem;">✨</div>
+                <h3 style="font-family: 'Cormorant Garamond', serif; margin-bottom: 0.5rem;">Feature Title</h3>
+                <p style="color: var(--deep-blue);">Feature description goes here</p>
+              </div>
+            </div>
+          `
+        },
+        {
+          title: 'Contact Box',
+          description: 'Adds a styled contact information box',
+          content: `
+            <div class="contact-box" style="background: var(--cream); padding: 30px; border-radius: 8px; margin: 20px 0;">
+              <h3 style="font-family: 'Cormorant Garamond', serif; color: var(--deep-blue); margin-bottom: 1rem;">Get in Touch</h3>
+              <div style="display: grid; gap: 15px;">
+                <p style="display: flex; align-items: center; gap: 10px;">
+                  <span style="color: var(--gold);">📍</span> 
+                  <span>123 Luxury Avenue, Fashion District</span>
+                </p>
+                <p style="display: flex; align-items: center; gap: 10px;">
+                  <span style="color: var(--gold);">📞</span>
+                  <span>+1 234 567 8900</span>
+                </p>
+                <p style="display: flex; align-items: center; gap: 10px;">
+                  <span style="color: var(--gold);">✉️</span>
+                  <span>contact@orolux.com</span>
+                </p>
+              </div>
+            </div>
+          `
+        }
+      ]
+    });
+  </script>
+</body>
+</html>

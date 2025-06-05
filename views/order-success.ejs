@@ -1,0 +1,68 @@
+<%- include('partials/header') %>
+<div class="container order-success">
+  <div class="success-content">
+    <div class="checkmark">
+      <i class="fas fa-check-circle"></i>
+    </div>
+    <h2>Order Confirmed</h2>
+    <p class="thank-you">Thank you for your purchase</p>
+    <p class="confirmation-msg">Your order has been successfully placed. We will contact you shortly with further details.</p>
+    <a href="/" class="btn btn-primary home-btn">Continue Shopping</a>
+  </div>
+</div>
+
+<style>
+.order-success {
+  text-align: center;
+  padding: 60px 20px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.success-content {
+  background: #fff;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.checkmark {
+  color: #28a745;
+  font-size: 64px;
+  margin-bottom: 20px;
+}
+
+.order-success h2 {
+  font-size: 32px;
+  color: #333;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.thank-you {
+  font-size: 20px;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.confirmation-msg {
+  color: #777;
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+
+.home-btn {
+  display: inline-block;
+  padding: 12px 35px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.home-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+</style>
+<%- include('partials/footer') %>

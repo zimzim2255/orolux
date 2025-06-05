@@ -1,0 +1,110 @@
+{
+  "common": {
+    "menu": {
+      "home": "Home",
+      "shop": "Shop",
+      "about": "About Us",
+      "contact": "Contact"
+    },
+    "cart": {
+      "title": "Shopping Cart",
+      "checkout": "Checkout",
+      "empty": "Your cart is empty"
+    },
+    "product": {
+      "addToCart": "Add to Cart",
+      "outOfStock": "Out of Stock",
+      "details": "Product Details",
+      "price": "Price"
+    }
+  },
+  "profile": {
+    "title": "Profile",
+    "welcomeMessage": "Welcome",
+    "accountInformation": "Account Information",
+    "username": "Username",
+    "email": "Email",
+    "totalSpent": "Total Spent",
+    "memberSince": "Member Since",
+    "changeEmail": "Change Email",
+    "changePassword": "Change Password",
+    "myWishlist": "My Wishlist",
+    "yourOrders": "Your Orders",
+    "orderId": "Order ID",
+    "total": "Total",
+    "date": "Date",
+    "status": "Status",
+    "deliveryInformation": "Delivery Information",
+    "name": "Name",
+    "phone": "Phone",
+    "address": "Address",
+    "productsOrdered": "Products Ordered",
+    "viewDetails": "View Details",
+    "returnToHome": "Return to Home",
+    "logout": "Logout",
+    "changeEmailAddress": "Change Email Address",
+    "newEmailAddress": "New Email Address",
+    "enterNewEmail": "Enter your new email address",
+    "cancel": "Cancel",
+    "updateEmail": "Update Email",
+    "currentPassword": "Current Password",
+    "newPassword": "New Password",
+    "confirmNewPassword": "Confirm New Password",
+    "enterCurrentPassword": "Enter your current password",
+    "enterNewPassword": "Enter your new password",
+    "confirmNewPasswordPlaceholder": "Confirm your new password",
+    "updatePassword": "Update Password",
+    "notAvailable": "N/A",
+    "productUnavailable": "Product Unavailable",
+    "noOrders": "No orders yet",
+    "orderStatus": {
+      "processing": "Processing",
+      "shipped": "Shipped",
+      "delivered": "Delivered",
+      "cancelled": "Cancelled"
+    }
+  },
+  "registerPage": {
+    "title": "Register",
+    "createAccount": "Create Account",
+    "username": "Username",
+    "enterUsername": "Enter your username",
+    "email": "Email",
+    "enterEmail": "Enter your email",
+    "password": "Password",
+    "enterPassword": "Enter your password",
+    "confirmPassword": "Confirm Password",
+    "enterConfirmPassword": "Enter your password again",
+    "registerButton": "Register",
+    "cancelButton": "Cancel",
+    "loginRedirect": "Already have an account? Log in",
+    "registrationSuccess": "Registration successful!",
+    "registrationFailed": "Registration failed. Please try again.",
+    "emailAlreadyExists": "Email already exists.",
+    "usernameAlreadyExists": "Username already exists.",
+    "invalidEmail": "Invalid email address.",
+    "passwordsDoNotMatch": "Passwords do not match.",
+    "weakPassword": "Weak password. Please choose a stronger password."
+  },
+  "loginPage": {
+    "title": "Login",
+    "welcomeBack": "Welcome Back",
+    "email": "Email",
+    "enterEmail": "Enter your email",
+    "password": "Password",
+    "enterPassword": "Enter your password",
+    "signIn": "Sign In",
+    "noAccount": "Don't have an account?",
+    "registerNow": "Register now"
+  },
+  "contactPage": {
+    "title": "Contact Us",
+    "name": "Name",
+    "enterName": "Enter your full name",
+    "email": "Email",
+    "enterEmail": "Enter your email address",
+    "message": "Message",
+    "enterMessage": "How can we help you?",
+    "sendMessage": "Send Message"
+  }
+}

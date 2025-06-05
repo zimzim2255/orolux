@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OROLUX - Luxury Watches</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Swiper JS CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+  <style>
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+      40% {transform: translateY(-20px);}
+      60% {transform: translateY(-10px);}
+    }
+    .animate-bounce {
+      animation: bounce 2s infinite;
+    }
+    .swiper-pagination-bullet {
+      background: white !important;
+      opacity: 0.5 !important;
+    }
+    .swiper-pagination-bullet-active {
+      opacity: 1 !important;
+    }
+  </style>
+</head>
+<body class="font-sans antialiased">
+  <%- include('partials/header') %>
+  <!-- Hero Section with Swiper -->
+  <div class="swiper hero-slider relative h-screen w-full overflow-hidden">
+    <div class="swiper-wrapper">
+      <!-- Slide 1 -->
+      <div class="swiper-slide relative">
+        <div class="absolute inset-0">
+          <img 
+            src="https://images.unsplash.com/photo-1523170335258-f5ed11844a49?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1480&q=80" 
+            alt="Luxury Watch Collection 1"
+            class="w-full h-full object-cover"
+          >
+          <div class="absolute inset-0 bg-black bg-opacity-30"></div>
+        </div>
+        <div class="container mx-auto h-full flex items-center relative z-10 px-4">
+          <div class="ml-auto text-right max-w-md">
+            <p class="text-gray-200 uppercase tracking-widest text-sm mb-2">
+              A Collection Of
+            </p>
+            <h1 class="text-5xl font-light text-white mb-6">
+              OROLUX
+            </h1>            <a 
+              href="/products" 
+              class="inline-block border border-white text-white px-8 py-3 hover:bg-white hover:text-blue-900 transition duration-300"
+            >
+              VIEW WATCHES
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 2 -->
+      <div class="swiper-slide relative">
+        <div class="absolute inset-0">
+          <img 
+            src="https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+            alt="Luxury Watch Collection 2"
+            class="w-full h-full object-cover"
+          >
+          <div class="absolute inset-0 bg-black bg-opacity-30"></div>
+        </div>
+        <div class="container mx-auto h-full flex items-center relative z-10 px-4">
+          <div class="ml-auto text-right max-w-md">
+            <p class="text-gray-200 uppercase tracking-widest text-sm mb-2">
+              Limited Edition
+            </p>
+            <h1 class="text-5xl font-light text-white mb-6">
+              CHRONOGRAPH
+            </h1>            <a 
+              href="/products" 
+              class="inline-block border border-white text-white px-8 py-3 hover:bg-white hover:text-blue-900 transition duration-300"
+            >
+              EXPLORE
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 3 -->
+      <div class="swiper-slide relative">
+        <div class="absolute inset-0">
+          <img 
+            src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+            alt="Luxury Watch Collection 3"
+            class="w-full h-full object-cover"
+          >
+          <div class="absolute inset-0 bg-black bg-opacity-30"></div>
+        </div>
+        <div class="container mx-auto h-full flex items-center relative z-10 px-4">
+          <div class="ml-auto text-right max-w-md">
+            <p class="text-gray-200 uppercase tracking-widest text-sm mb-2">
+              New Arrival
+            </p>
+            <h1 class="text-5xl font-light text-white mb-6">
+              GRAND COMPLICATION
+            </h1>            <a 
+              href="/createProduct.js" 
+              class="inline-block border border-white text-white px-8 py-3 hover:bg-white hover:text-blue-900 transition duration-300"
+            >
+              DISCOVER
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scroll Indicator -->
+    <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce z-10">
+      <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+      </svg>
+    </div>
+
+    <!-- Swiper Pagination (Dots) -->
+    <div class="swiper-pagination !bottom-8 !right-8 !left-auto !w-auto"></div>
+  </div>
+
+  <!-- Newsletter Section -->
+  <div class="container mx-auto py-20 px-4">
+    <div class="max-w-xl mx-auto text-center">
+      <h2 class="text-3xl mb-8">The Art of Precision Timekeeping</h2>
+        <!-- Newsletter Signup -->
+      <div class="mt-10">
+        <p class="text-lg mb-6 text-blue-800/80">Want to be notified when new watches are released?</p>
+        <form class="flex flex-col sm:flex-row gap-4 justify-center">
+          <input 
+            type="email" 
+            placeholder="Email" 
+            class="px-4 py-3 border focus:outline-none focus:ring-2 focus:ring-blue-200 flex-1 max-w-sm"
+            required
+          >          <button 
+            type="submit"
+            class="px-8 py-3 bg-blue-900 text-white hover:bg-blue-800 transition duration-300"
+          >
+            JOIN
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- New Arrivals Section -->
+  <div class="wrapper--full bg-gray-50 py-16">
+    <div class="collection-list-item max-w-[90rem] mx-auto px-4">
+        <div class="collection-list__heading__text mb-12 text-center">            <a href="/collections/all-watches" class="hero__title text-3xl font-light tracking-wide text-blue-900 hover:text-blue-700 transition-colors" title="Browse our New Arrivals collection">
+                New Arrivals
+            </a>
+        </div>        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12" data-grid-large="3" data-grid-small="2">
+            <% if (newArrivals && newArrivals.length > 0) { %>
+                <% newArrivals.forEach(product => { %>
+                    <div class="product-grid-item group">
+                        <div class="product-grid-item__container bg-white shadow-lg hover:shadow-xl transition-shadow duration-300">
+                            <a href="/product/<%= product._id %>" class="block relative">
+                                <% if (Date.now() - new Date(product.createdAt).getTime() < 7 * 24 * 60 * 60 * 1000) { %>
+                                    <div class="absolute top-4 right-4 bg-black text-white px-3 py-1 text-xs uppercase tracking-wider z-10">New</div>
+                                <% } %>
+                                <div class="product-grid-item__images relative aspect-square overflow-hidden">
+                                    <img src="<%= product.image %>" 
+                                         alt="<%= product.name %>" 
+                                         class="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110">
+                                </div>
+                                <div class="product__grid__info p-6 text-center">                                    <h3 class="product__grid__title text-lg font-light text-blue-900 mb-2"><%= product.name %></h3>
+                                    <p class="text-blue-700/70 font-semibold">$<%= product.price.toLocaleString() %> USD</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                <% }) %>
+                <% if (newArrivals.length < 6) { %>
+                    <% for(let i = 0; i < 6 - newArrivals.length; i++) { %>
+                        <div class="product-grid-item group opacity-0"></div>
+                    <% } %>
+                <% } %>
+            <% } else { %>
+                <p class="col-span-3 text-center text-gray-500">No new arrivals at the moment.</p>
+            <% } %>        </div>
+    </div>
+  </div>
+
+  <!-- Featured Watch Section -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 min-h-screen">
+    <!-- Image Section -->
+    <div class="relative h-[600px] lg:h-screen">
+        <div class="absolute inset-0">
+            <div class="relative w-full h-full">                <div class="absolute inset-0 bg-blue-950 bg-opacity-20"></div>
+                <img 
+                    src="https://thekeystone.com/cdn/shop/files/L2270075_copy.jpg?v=1747869133&amp;width=1840" 
+                    alt="Patek Philippe Chronograph 1579" 
+                    class="w-full h-full object-cover"
+                    loading="lazy">
+            </div>
+        </div>
+    </div>
+    
+    <!-- Text Section -->
+    <div class="flex items-center bg-white px-8 lg:px-16 py-16 lg:py-0">
+        <div class="max-w-xl">            <p class="text-sm uppercase tracking-widest text-blue-700/70 mb-4">Patek Philippe</p>
+            <h2 class="text-4xl font-light text-blue-900 mb-6">Chronograph 1579 Retailed by Gübelin</h2>            <div class="prose prose-lg text-blue-700/70 mb-8">
+                <p>This outstanding chronograph was retailed by Gubelin in 1957 and features the retailer's signature on the dial at six o'clock. This 1579 comes with an extract from the archives at Patek Philippe as well as an archive paper from Gubelin.</p>
+            </div>
+            <a href="/watches/patek-philippe-1579" 
+               class="inline-block border-b-2 border-black text-lg hover:border-blue-600 hover:text-blue-600 transition-colors duration-300">
+                Learn More
+            </a></div>    </div>
+  </div>
+
+  <!-- Service Features Section -->
+  <div class="bg-neutral-50 py-20">
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-12">            <!-- Free Returns -->
+            <div class="text-center">
+                <div class="icon__column__icon mb-6" data-aos-delay="200" data-aos="svg-dash">
+                    <svg aria-hidden="true" focusable="false" role="presentation" class="w-12 h-12 mx-auto text-blue-400" viewBox="0 0 24 24">
+                        <g stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M15 18.75h-3.75v3.75M22.667 19.483a5.572 5.572 0 0 1-10.74-.733M19.5 15.75h3.75V12M11.833 15.017a5.572 5.572 0 0 1 10.74.733"></path>
+                            <path d="M7.875 17.25H4.314a1.441 1.441 0 0 1-1.383-1.136l-2.138-9A1.484 1.484 0 0 1 2.176 5.25h18.148a1.484 1.484 0 0 1 1.383 1.864l-.3 1.256M3.75 5.25l4.5-4.5M18.75 5.25L14.25.752"></path>
+                        </g>
+                    </svg>
+                </div>
+                <p class="text-lg font-light mb-2 text-blue-900">Free returns</p>
+                <div class="text-sm text-blue-700/70">
+                    <p>We offer a 5 Day Inspection Period and Free Returns</p>
+                </div>
+            </div>            <!-- Questions -->
+            <div class="text-center">
+                <div class="icon__column__icon mb-6" data-aos-delay="300" data-aos="svg-dash">
+                    <svg aria-hidden="true" focusable="false" role="presentation" class="w-12 h-12 mx-auto text-blue-400" viewBox="0 0 24 24">
+                        <g stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M13.673 23.25H8.827l.808-4.5h3.231l.807 4.5zM6.404 23.25h9.692M.75 14.25h21M21.75 14.25v1.5a3 3 0 0 1-3 3h-15a3 3 0 0 1-3-3v-12a3 3 0 0 1 3-3h15c.466-.001.925.108 1.342.316"></path>
+                            <path d="M22.244 9.75a1.964 1.964 0 0 1-1.823 1.5h-7.5a1.06 1.06 0 0 1-1.027-1.5l1.418-4.5a2.16 2.16 0 0 1 1.866-1.5h6.965a1.136 1.136 0 0 1 1.07 1.5l-.969 4.5z"></path>
+                            <path d="M13.993 4.253l3.428 3.997 5.617-3.996M5.25 11.25h1.5M5.25 8.25h3M5.25 5.25h5.25"></path>
+                        </g>
+                    </svg>
+                </div>
+                <p class="text-lg font-light mb-2 text-blue-900">Questions?</p>
+                <div class="text-sm text-blue-700/70">
+                    <p>Reach out with any questions:</p>
+                    <p>oroluxstor1@gmail.com</p>
+                    <p>213-632-9061</p>
+                </div>
+            </div>            <!-- Worldwide Shipping -->
+            <div class="text-center">
+                <div class="icon__column__icon mb-6" data-aos-delay="400" data-aos="svg-dash">
+                    <svg aria-hidden="true" focusable="false" role="presentation" class="w-12 h-12 mx-auto text-blue-400" viewBox="0 0 24 24">
+                        <g stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M7.538 21.75H6.75a1.5 1.5 0 0 1-1.5-1.5v-6a1.5 1.5 0 0 1 1.5-1.5h9a1.5 1.5 0 0 1 1.5 1.5v5.288M17.25 14.25h3a3 3 0 0 1 3 3v3a1.5 1.5 0 0 1-1.5 1.5h-2.288"></path>
+                            <path d="M17.625 19.5a1.874 1.874 0 1 1 .001 3.749 1.874 1.874 0 0 1-.001-3.749zM9.375 19.5a1.874 1.874 0 1 1 .001 3.749 1.874 1.874 0 0 1-.001-3.749zM15.788 21.75h-4.576M23.25 17.25h-3M1.757 13.891A9 9 0 1 1 18.75 9.749M9.75.75a11.853 11.853 0 0 0-3.75 9M9.75.75a11.853 11.853 0 0 1 3.75 9M1.263 6.75h16.971"></path>
+                        </g>
+                    </svg>
+                </div>
+                <p class="text-lg font-light mb-2 text-blue-900"> Morroco</p>
+                <div class="text-sm text-blue-700/70">
+                    <p>Ship anywhere in the Morroco</p>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <!-- Featured Watch Section 2 (Reversed) -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 min-h-screen">
+    <!-- Text Section -->
+    <div class="flex items-center bg-white px-8 lg:px-16 py-16 lg:py-0 lg:order-1">
+        <div class="max-w-xl">            <p class="text-sm uppercase tracking-widest text-blue-700/70 mb-4">Rolex</p>
+            <h2 class="text-4xl font-light text-blue-900 mb-6">Day-Date Reference 1803</h2>            <div class="prose prose-lg text-blue-700/70 mb-8">
+                <p>An exceptional example of the iconic Rolex Day-Date, this reference 1803 dates to 1960 and remains in remarkable original condition. The watch features its original silver sunburst dial with applied indices and the characteristic day and date displays.</p>
+            </div>
+            <a href="/watches/rolex-day-date-1803" 
+               class="inline-block border-b-2 border-black text-lg hover:border-blue-600 hover:text-blue-600 transition-colors duration-300">
+                Learn More
+            </a>
+        </div>
+    </div>
+
+    <!-- Image Section -->
+    <div class="relative h-[600px] lg:h-screen lg:order-2">
+        <div class="absolute inset-0">
+            <div class="relative w-full h-full">                <div class="absolute inset-0 bg-blue-950 bg-opacity-20"></div>
+                <img 
+                    src="https://thekeystone.com/cdn/shop/files/199723-1.jpg?v=1748564945&amp;width=2000" 
+                    alt="Rolex Day-Date 1803" 
+                    class="w-full h-full object-cover"
+                    loading="lazy">
+            </div>
+        </div>
+    </div>
+  </div>
+  <%- include('partials/footer') %>
+
+  <!-- Swiper JS -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const swiper = new Swiper('.hero-slider', {
+        // Optional parameters
+        loop: true,
+        autoplay: {
+          delay: 5000,
+          disableOnInteraction: false,
+        },
+        effect: 'fade',
+        fadeEffect: {
+          crossFade: true
+        },
+        speed: 1000,
+        
+        // Pagination
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true,
+          renderBullet: function (index, className) {
+            return `<span class="${className} w-3 h-3 rounded-full inline-block mx-1"></span>`;
+          },
+        },
+      });
+    });
+  </script>
+</body>
+</html>

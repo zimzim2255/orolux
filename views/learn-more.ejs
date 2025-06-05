@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Patek Philippe Yellow Gold Chronograph Ref. 1579 | OROLUX</title>
+  <%- include('partials/head') %>
+  <style>
+    :root {
+      --deep-blue: #0a2440;
+      --cream: #f0f5ff;
+      --gold: #b4c4d6;
+      --light-gray: #e0e5f0;
+    }
+
+    .heritage-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 8rem 2rem 4rem;
+    }
+
+    .watch-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3rem;
+      font-weight: 300;
+      color: var(--deep-blue);
+      margin-bottom: 2rem;
+      text-align: center;
+      letter-spacing: 2px;
+    }
+
+    .watch-subtitle {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.1rem;
+      color: var(--gold);
+      text-align: center;
+      margin-bottom: 4rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+    }
+
+    .heritage-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      margin-bottom: 4rem;
+    }
+
+    .watch-image {
+      width: 100%;
+      aspect-ratio: 1;
+      background: var(--deep-blue);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .watch-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.7s ease;
+    }
+
+    .watch-details {
+      padding: 2rem 0;
+    }
+
+    .detail-section {
+      margin-bottom: 2rem;
+    }
+
+    .detail-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      color: var(--deep-blue);
+      margin-bottom: 1rem;
+      font-weight: 300;
+      letter-spacing: 1px;
+    }
+
+    .detail-text {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1rem;
+      line-height: 1.8;
+      color: rgba(10, 36, 64, 0.8);
+      margin-bottom: 1.5rem;
+    }
+
+    .specifications {
+      background: white;
+      padding: 2rem;
+      border-radius: 2px;
+      margin-top: 2rem;
+    }
+
+    .spec-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .spec-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--light-gray);
+    }
+
+    .spec-item:last-child {
+      border-bottom: none;
+    }
+
+    .spec-label {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.9rem;
+      color: var(--deep-blue);
+      font-weight: 500;
+    }
+
+    .spec-value {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.9rem;
+      color: rgba(10, 36, 64, 0.8);
+    }
+
+    .heritage-footer {
+      text-align: center;
+      margin-top: 4rem;
+    }
+
+    .inquire-button {
+      display: inline-block;
+      padding: 1rem 3rem;
+      background: var(--deep-blue);
+      color: white;
+      text-decoration: none;
+      border-radius: 2px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      transition: all 0.3s ease;
+    }
+
+    .inquire-button:hover {
+      background: var(--gold);
+      transform: translateY(-2px);
+    }
+
+    .learn-more-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .hero-section {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .hero-section h1 {
+      font-size: 2.5rem;
+      color: #1a1a1a;
+      margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+      font-size: 1.2rem;
+      color: #666;
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .watch-gallery {
+      position: sticky;
+      top: 2rem;
+    }
+
+    .main-image {
+      margin-bottom: 1rem;
+    }
+
+    .main-image img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .image-thumbnails {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+
+    .image-thumbnails img {
+      width: 100%;
+      height: auto;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .image-thumbnails img:hover {
+      transform: scale(1.05);
+    }
+
+    .watch-details {
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+    }
+
+    .specs-container {
+      background: #f8f8f8;
+      padding: 2rem;
+      border-radius: 8px;
+    }
+
+    .specs-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .specs-list li {
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+    }
+
+    .specs-list strong {
+      color: #1a1a1a;
+      margin-right: 0.5rem;
+    }
+
+    h2 {
+      font-size: 1.8rem;
+      color: #1a1a1a;
+      margin-bottom: 1.5rem;
+    }
+
+    p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: #333;
+      margin-bottom: 1rem;
+    }
+
+    @media (max-width: 1024px) {
+      .content-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .watch-gallery {
+        position: relative;
+        top: 0;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .learn-more-container {
+        padding: 1rem;
+      }
+
+      .hero-section h1 {
+        font-size: 2rem;
+      }
+
+      .image-thumbnails {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <%- include('partials/header') %>
+
+  <div class="heritage-container">
+    <h1 class="watch-title">Patek Philippe Yellow Gold Chronograph</h1>
+    <div class="watch-subtitle">Reference 1579 - Retailed by Gubelin</div>
+
+    <div class="heritage-grid">
+      <div class="watch-image">
+        <img src="https://img.chrono24.com/images/uhren/84wmpsscoq7q-kquk0f5y24cow1sox0rkjl35-ExtraLarge.jpg" alt="Patek Philippe Ref. 1579">
+      </div>
+
+      <div class="watch-details">
+        <div class="detail-section">
+          <h2 class="detail-title">Heritage</h2>
+          <p class="detail-text">Introducing an exceptional piece of horological history - the Patek Philippe Reference 1579 chronograph in yellow gold. This extraordinary timepiece, originally retailed by the prestigious Gubelin, represents one of the finest examples of mid-20th century watchmaking excellence.</p>
+          <p class="detail-text">Reference 1579, launched in 1943, is distinguished by its magnificent spider lugs and refined chronograph functionality, making it one of the most sought-after vintage Patek Philippe chronographs.</p>
+        </div>
+
+        <div class="detail-section">
+          <h2 class="detail-title">Extraordinary Condition</h2>
+          <p class="detail-text">This particular example stands out for its remarkable preservation. The case retains its original proportions and sharp edges, while the dial exhibits an exceptional level of preservation, maintaining its original finish and pristine condition.</p>
+          <p class="detail-text">The signature spider lugs remain crisp and well-defined, showing minimal signs of polishing over the years. The dial's original patina has developed beautifully, giving the watch a unique character while maintaining perfect legibility.</p>
+        </div>
+
+        <div class="specifications">
+          <h2 class="detail-title">Specifications</h2>
+          <ul class="spec-list">
+            <li class="spec-item">
+              <span class="spec-label">Reference</span>
+              <span class="spec-value">1579</span>
+            </li>
+            <li class="spec-item">
+              <span class="spec-label">Material</span>
+              <span class="spec-value">18k Yellow Gold</span>
+            </li>
+            <li class="spec-item">
+              <span class="spec-label">Movement</span>
+              <span class="spec-value">Manual-winding Chronograph</span>
+            </li>
+            <li class="spec-item">
+              <span class="spec-label">Case Diameter</span>
+              <span class="spec-value">36mm</span>
+            </li>
+            <li class="spec-item">
+              <span class="spec-label">Retailer</span>
+              <span class="spec-value">Gubelin</span>
+            </li>
+            <li class="spec-item">
+              <span class="spec-label">Condition</span>
+              <span class="spec-value">Extraordinary</span>
+            </li>
+            <li class="spec-item">
+              <span class="spec-label">Box & Papers</span>
+              <span class="spec-value">Original Box and Archive Extract</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="heritage-footer">
+      <a href="/contact" class="inquire-button">Inquire About This Piece</a>
+    </div>
+  </div>
+
+  <main class="learn-more-container">
+    <div class="hero-section">
+        <h1>Patek Philippe Ref. 1579</h1>
+        <p class="subtitle">Yellow Gold Chronograph - Retailed by Gubelin</p>
+    </div>
+
+    <div class="content-grid">
+        <section class="watch-gallery">
+            <div class="main-image">
+                <img src="https://img.chrono24.com/images/uhren/34947048-gqjzj7scjtzbyaetm8uk9p84-Zoom.jpg" alt="Patek Philippe Ref. 1579 Main View" class="featured-image">
+            </div>
+            <div class="image-thumbnails">
+                <img src="https://img.chrono24.com/images/uhren/84wmpsscoq7q-kquk0f5y24cow1sox0rkjl35-Zoom.jpg" alt="Movement Detail">
+                <img src="https://img.chrono24.com/images/uhren/84wmpsscoq7q-kquk0f5y24cow1sox0rkjl35-ExtraLarge.jpg" alt="Case Detail">
+                <img src="https://img.chrono24.com/images/uhren/84wmpsscoq7q-kquk0f5y24cow1sox0rkjl35-ExtraLarge.jpg" alt="Dial Detail">
+            </div>
+        </section>
+
+        <section class="watch-details">
+            <div class="specs-container">
+                <h2>Technical Specifications</h2>
+                <ul class="specs-list">
+                    <li><strong>Reference:</strong> 1579</li>
+                    <li><strong>Manufacturer:</strong> Patek Philippe</li>
+                    <li><strong>Year:</strong> Circa 1950</li>
+                    <li><strong>Case Material:</strong> 18k Yellow Gold</li>
+                    <li><strong>Case Diameter:</strong> 36mm</li>
+                    <li><strong>Movement:</strong> Manual-winding chronograph caliber 13-130</li>
+                    <li><strong>Functions:</strong> Hours, minutes, small seconds, chronograph</li>
+                    <li><strong>Retailer:</strong> Gubelin</li>
+                    <li><strong>Condition:</strong> Extraordinary</li>
+                </ul>
+            </div>
+
+            <div class="heritage-section">
+                <h2>Heritage & Significance</h2>
+                <p>The Patek Philippe Reference 1579 stands as one of the most elegant chronographs ever produced by the prestigious manufacturer. This particular example, retailed by the renowned Swiss jeweler Gubelin, represents a pinnacle of mid-century watchmaking excellence.</p>
+                <p>Distinguished by its spider lugs and perfectly proportioned 36mm case, the reference 1579 was produced in very limited numbers between 1943 and 1965, with only approximately 450 pieces made. This specific example remains in extraordinary condition, preserving its original case proportions and the sharp hallmarks on its lugs.</p>
+            </div>
+
+            <div class="condition-section">
+                <h2>Extraordinary Condition</h2>
+                <p>This example presents in remarkable condition, retaining its original finish and sharp case edges. The dial shows exceptional preservation, with all original applied gold indices and the prestigious Gubelin signature intact. The movement remains in pristine condition, having been recently serviced to ensure perfect mechanical operation.</p>
+            </div>
+
+            <div class="investment-section">
+                <h2>Investment Value</h2>
+                <p>Reference 1579 chronographs, particularly those in yellow gold with prestigious retailer signatures, represent some of the most sought-after vintage Patek Philippe timepieces. Their rarity, combined with increasing collector demand, positions this reference as a significant investment opportunity in the high-end vintage watch market.</p>
+            </div>
+        </section>
+    </div>
+  </main>
+
+  <%- include('partials/footer') %>
+</body>
+</html>

@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>User Management | Admin</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Montserrat:wght@300;400&display=swap">
+  <style>
+    :root {
+      --deep-blue: #0a2440;
+      --cream: #f0f5ff;
+      --gold: #b4c4d6;
+      --light-gray: #e0e5f0;
+      --light-gold: #f9f0db;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      min-height: 100vh;
+      background: var(--cream);
+      color: var(--deep-blue);
+      padding: 2rem;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .header {
+      background: var(--deep-blue);
+      padding: 2rem;
+      margin-bottom: 3rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .header h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.5rem;
+      font-weight: 600;
+      color: var(--cream);
+      letter-spacing: 4px;
+      margin-bottom: 0.5rem;
+    }
+
+    .users-table {
+      width: 100%;
+      background: white;
+      border-radius: 8px;
+      border-collapse: collapse;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      margin-bottom: 2rem;
+      overflow: hidden;
+    }
+
+    .users-table th {
+      background: var(--deep-blue);
+      color: var(--cream);
+      font-weight: 500;
+      padding: 1rem 1.5rem;
+      text-align: left;
+      font-size: 0.9rem;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .users-table td {
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid var(--light-gray);
+      font-size: 0.95rem;
+    }
+
+    .users-table tr:hover {
+      background-color: var(--cream);
+    }
+
+    .users-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .action-links {
+      display: flex;
+      gap: 0.8rem;
+      align-items: center;
+    }
+
+    .action-links a {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.5rem 1.2rem;
+      color: var(--deep-blue);
+      text-decoration: none;
+      transition: all 0.3s ease;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      border: 1px solid var(--deep-blue);
+    }
+
+    .action-links a:first-child {
+      background-color: var(--cream);
+    }
+
+    .action-links a:last-child {
+      background-color: #fff1f1;
+      border-color: #d32f2f;
+      color: #d32f2f;
+    }
+
+    .action-links a:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .action-links a:first-child:hover {
+      background-color: var(--deep-blue);
+      color: var(--cream);
+    }
+
+    .action-links a:last-child:hover {
+      background-color: #d32f2f;
+      color: white;
+    }
+
+    .back-button {
+      display: inline-block;
+      padding: 1rem 2rem;
+      background: var(--deep-blue);
+      color: white;
+      text-decoration: none;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .back-button:hover {
+      background: #1a4275;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .action-button {
+      padding: 0.75rem 1.5rem;
+      background: var(--gold);
+      color: var(--deep-blue);
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+    }
+
+    .action-button:hover {
+      background: #a3b1c6;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .search-container {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      align-items: center;
+    }
+
+    .search-input {
+      flex: 1;
+      padding: 0.75rem;
+      border: 1px solid var(--gold);
+      border-radius: 4px;
+      font-family: 'Montserrat', sans-serif;
+      color: var(--deep-blue);
+      transition: all 0.3s ease;
+      max-width: 400px;
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--deep-blue);
+      box-shadow: 0 0 0 2px rgba(10, 36, 64, 0.1);
+    }
+
+    .search-button {
+      padding: 0.75rem 1.5rem;
+      background: var(--deep-blue);
+      color: var(--cream);
+      border: none;
+      border-radius: 4px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .search-button:hover {
+      background: #1a4275;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .actions-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .user-stats {
+      display: flex;
+      gap: 1rem;
+      font-size: 0.9rem;
+      flex-wrap: wrap;
+    }
+
+    .stat-badge {
+      background: var(--light-gold);
+      padding: 0.3rem 0.8rem;
+      border-radius: 15px;
+      color: var(--deep-blue);
+      white-space: nowrap;
+    }
+
+    .stat-badge.user-type {
+      background: var(--deep-blue);
+      color: var(--cream);
+    }
+
+    .stat-badge.orders-badge {
+      background: var(--deep-blue);
+      color: var(--cream);
+      display: flex;
+      gap: 0.8rem;
+      align-items: center;
+      font-size: 0.85rem;
+    }
+
+    .orders-badge span {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .completed-orders {
+      padding-left: 0.8rem;
+      border-left: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .total-spent {
+      font-weight: 600;
+      color: #2d7a2d;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 1rem;
+      }
+
+      .header h1 {
+        font-size: 2rem;
+      }
+
+      .users-table {
+        display: block;
+        overflow-x: auto;
+      }
+
+      .users-table td, 
+      .users-table th {
+        padding: 0.75rem 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <h1>User Management</h1>
+    </header>
+
+    <div class="actions-row">
+      <form action="/admin/users" method="GET" class="search-container">
+        <input 
+          type="search" 
+          name="search" 
+          placeholder="Search users..." 
+          class="search-input"
+          value="<%= typeof searchQuery !== 'undefined' ? searchQuery : '' %>"
+        >
+        <button type="submit" class="search-button">Search</button>
+      </form>
+
+      <form action="/admin/recalculate-total-spent" method="POST" style="display: inline;">
+        <button type="submit" class="action-button" onclick="return confirm('Recalculate total spent for all users?')">
+          🔄 Recalculate Total Spent
+        </button>
+      </form>
+    </div>
+
+    <table class="users-table">
+      <tr>
+        <th>ID</th>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Stats</th>
+        <th>Action</th>
+      </tr>
+      <% users.forEach(user => { %>
+        <tr>
+          <td><%= user._id %></td>
+          <td><%= user.username %></td>
+          <td><%= user.email %></td>          <td>
+            <div class="user-stats">              <span class="stat-badge user-type">
+                <%= user.role === 'user' ? '👤 Registered' : '👥 Guest' %>
+              </span>
+              <span class="stat-badge orders-badge">
+                <span title="Total Orders">📦 <%= user.totalOrders || 0 %></span>
+                <span class="completed-orders" title="Completed Orders">✅ <%= user.completedOrders ? user.completedOrders.length : 0 %></span>
+              </span>
+              <span class="stat-badge total-spent">
+                Total: $<%= user.totalSpent ? user.totalSpent.toFixed(2) : '0.00' %>
+              </span>
+            </div>
+          </td>          <td class="action-links">
+            <a href="/admin/edit-user/<%= user._id %>">✏️ Edit</a>
+            <a href="/admin/delete-user/<%= user._id %>" onclick="return confirm('Are you sure you want to delete this user? This action cannot be undone.')">🗑️ Delete</a>
+          </td>
+        </tr>
+      <% }) %>
+    </table>
+
+    <a href="/admin/dashboard" class="back-button">⬅ Back to Dashboard</a>
+  </div>
+</body>
+</html>

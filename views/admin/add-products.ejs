@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Add Product | Admin</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Montserrat:wght@300;400&display=swap">
+  <style>
+    :root {
+      --deep-blue: #0a2440;
+      --cream: #f0f5ff;
+      --gold: #b4c4d6;
+      --light-gray: #e0e5f0;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      min-height: 100vh;
+      background: var(--cream);
+      color: var(--deep-blue);
+      padding: 2rem;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .header {
+      background: var(--deep-blue);
+      padding: 2rem;
+      margin-bottom: 3rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .header h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.5rem;
+      font-weight: 600;
+      color: var(--cream);
+      letter-spacing: 4px;
+      margin-bottom: 0.5rem;
+    }
+
+    .form-container {
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.9rem;
+      color: var(--deep-blue);
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid var(--gold);
+      border-radius: 4px;
+      font-family: 'Montserrat', sans-serif;
+      color: var(--deep-blue);
+      transition: all 0.3s ease;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--deep-blue);
+      box-shadow: 0 0 0 2px rgba(10, 36, 64, 0.1);
+    }
+
+    .form-textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .submit-button {
+      display: inline-block;
+      padding: 1rem 2rem;
+      background: var(--deep-blue);
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .submit-button:hover {
+      background: #1a4275;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 2rem;
+      padding: 1rem 2rem;
+      color: var(--deep-blue);
+      text-decoration: none;
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+      transition: all 0.3s ease;
+    }
+
+    .back-link:hover {
+      color: #1a4275;
+      transform: translateX(-5px);
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 1rem;
+      }
+
+      .header {
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+      }
+
+      .header h1 {
+        font-size: 2rem;
+      }
+
+      .form-container {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <h1>Add New Watch</h1>
+    </header>
+
+    <div class="form-container">
+      <form action="/admin/add-product" method="POST">
+        <div class="form-group">
+          <label class="form-label">Product Name</label>
+          <input type="text" name="name" required class="form-input">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Price (USD)</label>
+          <input type="number" name="price" step="0.01" required class="form-input">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Description</label>
+          <textarea name="description" required class="form-input form-textarea"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Image Filename</label>
+          <input type="text" name="image" placeholder="watch1.jpg" required class="form-input">
+        </div>
+
+        <button type="submit" class="submit-button">Save Product</button>
+      </form>
+    </div>
+
+    <a href="/admin/products" class="back-link">⬅ Back to Products</a>
+  </div>
+</body>
+</html>

@@ -1,0 +1,102 @@
+{
+  "common": {
+    "menu": {
+      "home": "الرئيسية",
+      "shop": "المتجر",
+      "about": "من نحن",
+      "contact": "اتصل بنا"
+    },
+    "cart": {
+      "title": "سلة التسوق",
+      "checkout": "الدفع",
+      "empty": "سلة التسوق فارغة"
+    },
+    "product": {
+      "addToCart": "أضف إلى السلة",
+      "outOfStock": "غير متوفر",
+      "details": "تفاصيل المنتج",
+      "price": "السعر"
+    }
+  },
+  "profile": {
+    "title": "الملف الشخصي",
+    "welcomeMessage": "مرحباً",
+    "accountInformation": "معلومات الحساب",
+    "username": "اسم المستخدم",
+    "email": "البريد الإلكتروني",
+    "totalSpent": "إجمالي الإنفاق",
+    "memberSince": "عضو منذ",
+    "changeEmail": "تغيير البريد الإلكتروني",
+    "changePassword": "تغيير كلمة المرور",
+    "myWishlist": "قائمة الرغبات",
+    "yourOrders": "طلباتك",
+    "orderId": "رقم الطلب",
+    "total": "المجموع",
+    "date": "التاريخ",
+    "status": "الحالة",
+    "deliveryInformation": "معلومات التوصيل",
+    "name": "الاسم",
+    "phone": "الهاتف",
+    "address": "العنوان",
+    "productsOrdered": "المنتجات المطلوبة",
+    "viewDetails": "عرض التفاصيل",
+    "returnToHome": "العودة للرئيسية",
+    "logout": "تسجيل الخروج",
+    "changeEmailAddress": "تغيير البريد الإلكتروني",
+    "newEmailAddress": "البريد الإلكتروني الجديد",
+    "enterNewEmail": "أدخل بريدك الإلكتروني الجديد",
+    "cancel": "إلغاء",
+    "updateEmail": "تحديث البريد",
+    "currentPassword": "كلمة المرور الحالية",
+    "newPassword": "كلمة المرور الجديدة",
+    "confirmNewPassword": "تأكيد كلمة المرور الجديدة",
+    "enterCurrentPassword": "أدخل كلمة المرور الحالية",
+    "enterNewPassword": "أدخل كلمة المرور الجديدة",
+    "confirmNewPasswordPlaceholder": "تأكيد كلمة المرور الجديدة",
+    "updatePassword": "تحديث كلمة المرور",
+    "notAvailable": "غير متوفر",
+    "productUnavailable": "المنتج غير متوفر",
+    "noOrders": "لا توجد طلبات بعد",
+    "orderStatus": {
+      "processing": "قيد المعالجة",
+      "shipped": "تم الشحن",
+      "delivered": "تم التوصيل",
+      "cancelled": "ملغي"
+    }
+  },
+  "registerPage": {
+    "title": "تسجيل حساب",
+    "createAccount": "إنشاء حساب",
+    "username": "اسم المستخدم",
+    "enterUsername": "أدخل اسم المستخدم",
+    "email": "البريد الإلكتروني",
+    "enterEmail": "أدخل بريدك الإلكتروني",
+    "password": "كلمة المرور",
+    "createPassword": "أنشئ كلمة مرور",
+    "createAccountBtn": "إنشاء حساب",
+    "haveAccount": "هل لديك حساب؟",
+    "signIn": "تسجيل الدخول"
+  },
+  "loginPage": {
+    "title": "تسجيل الدخول",
+    "welcomeBack": "مرحباً بعودتك",
+    "email": "البريد الإلكتروني",
+    "enterEmail": "أدخل بريدك الإلكتروني",
+    "password": "كلمة المرور",
+    "enterPassword": "أدخل كلمة المرور",
+    "signIn": "تسجيل الدخول",
+    "noAccount": "ليس لديك حساب؟",
+    "registerNow": "سجل الآن"
+  },
+  "contactPage": {
+    "title": "اتصل بنا",
+    "contactUs": "اتصل بنا",
+    "name": "الاسم",
+    "enterName": "أدخل اسمك الكامل",
+    "email": "البريد الإلكتروني",
+    "enterEmail": "أدخل بريدك الإلكتروني",
+    "message": "الرسالة",
+    "enterMessage": "كيف يمكننا مساعدتك؟",
+    "sendMessage": "إرسال الرسالة"
+  }
+}

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Terms & Conditions | OROLUX</title>
+  <%- include('partials/head') %>
+  <style>
+    .terms-container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 6rem 2rem 4rem;
+    }
+
+    .terms-title {
+      font-size: 2.5rem;
+      margin-bottom: 3rem;
+      color: #1a1a1a;
+      text-align: center;
+      font-weight: 300;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .terms-content {
+      background: #ffffff;
+      padding: 3rem;
+      border-radius: 2px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+      line-height: 1.8;
+      color: #333;
+      font-weight: 300;
+      letter-spacing: 0.3px;
+    }
+
+    .terms-content h3 {
+      font-size: 1.5rem;
+      margin: 2rem 0 1rem;
+      font-weight: 400;
+      color: #1a1a1a;
+      letter-spacing: 1px;
+    }
+
+    .terms-content p {
+      margin-bottom: 1.5rem;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 2rem;
+      padding: 0.75rem 1.5rem;
+      color: #1a1a1a;
+      text-decoration: none;
+      font-weight: 400;
+      letter-spacing: 1px;
+      border: 1px solid #1a1a1a;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    .back-link:hover {
+      background: #1a1a1a;
+      color: #ffffff;
+      transform: translateY(-1px);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    @media (max-width: 640px) {
+      .terms-container {
+        padding: 4rem 1rem 2rem;
+      }
+
+      .terms-content {
+        padding: 2rem;
+      }
+
+      .terms-title {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+      }
+    }
+  </style>
+</head>
+<body class="font-sans antialiased">
+  <%- include('partials/header') %>
+  <div class="terms-container">
+    <h2 class="terms-title">Terms & Conditions</h2>
+    <div class="terms-content">
+      <%- content %>
+    </div>
+    <a href="/" class="back-link">← Return to Home</a>
+  </div>
+  <%- include('partials/footer') %>
+</body>
+</html>

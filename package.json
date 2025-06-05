@@ -1,0 +1,30 @@
+{
+  "name": "www.oroloxstor.com",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "accept-language-parser": "^1.5.0",
+    "bcrypt": "^6.0.0",
+    "body-parser": "^2.2.0",
+    "dotenv": "^16.5.0",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "express-ejs-layouts": "^2.5.1",
+    "express-session": "^1.18.1",
+    "i18next": "^25.2.1",
+    "i18next-fs-backend": "^2.6.0",
+    "i18next-http-middleware": "^3.7.4",
+    "mongoose": "^8.15.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}

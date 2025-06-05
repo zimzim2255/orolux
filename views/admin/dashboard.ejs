@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>OROLUX Admin Dashboard</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Montserrat:wght@300;400&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    :root {
+      --deep-blue: #0a2440;
+      --cream: #f0f5ff;
+      --gold: #b4c4d6;
+      --light-gray: #e0e5f0;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      min-height: 100vh;
+      background: var(--cream);
+      color: var(--deep-blue);
+    }
+
+    .dashboard-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .dashboard-header {
+      background: var(--deep-blue);
+      padding: 2rem;
+      margin-bottom: 3rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .logo-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.5rem;
+      font-weight: 600;
+      color: var(--cream);
+      text-align: center;
+      letter-spacing: 4px;
+      margin-bottom: 0.5rem;
+    }
+
+    .welcome-text {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1rem;
+      color: var(--gold);
+      text-align: center;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .dashboard-description {
+      text-align: center;
+      color: var(--deep-blue);
+      font-size: 1.1rem;
+      margin-bottom: 3rem;
+      opacity: 0.8;
+    }
+
+    .admin-menu {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .admin-menu li {
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .admin-menu li:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .admin-menu a {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+      text-decoration: none;
+      color: var(--deep-blue);
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .admin-menu i {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: var(--gold);
+    }
+
+    .menu-title {
+      font-size: 1.1rem;
+      font-weight: 400;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .menu-description {
+      font-size: 0.9rem;
+      opacity: 0.7;
+      line-height: 1.4;
+    }
+
+    .dashboard-stats {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-item {
+      background: var(--light-gray);
+      border-radius: 8px;
+      padding: 1.5rem 2rem;
+      text-align: center;
+      min-width: 160px;
+    }
+
+    .stat-icon {
+      font-size: 2rem;
+    }
+
+    .stat-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+
+    @media (max-width: 768px) {
+      .dashboard-container {
+        padding: 1rem;
+      }
+
+      .dashboard-header {
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+      }
+
+      .logo-text {
+        font-size: 2rem;
+      }
+
+      .admin-menu {
+        grid-template-columns: 1fr;
+      }
+
+      .dashboard-stats {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard-container">
+    <header class="dashboard-header">
+      <h1 class="logo-text">OROLUX</h1>
+      <div class="welcome-text">Administrator Dashboard</div>
+    </header>
+
+    <p class="dashboard-description">Manage your website content, products, users, and more from this central dashboard.</p>
+
+    <div class="dashboard-stats">
+      <div class="stat-item">
+        <div class="stat-icon">🔔</div>
+        <div class="stat-title"><%= totalMessages || 0 %> New Messages</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-icon">📦</div>
+        <div class="stat-title"><%= totalOrders || 0 %> Orders</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-icon">👥</div>
+        <div class="stat-title"><%= totalUsers || 0 %> Registered Users</div>
+      </div>
+    </div>
+
+    <ul class="admin-menu">
+      <li>
+        <a href="/admin/pages">
+          <i class="fas fa-file-alt"></i>
+          <h2 class="menu-title">Static Pages</h2>
+          <p class="menu-description">Edit About, Terms, and Contact pages</p>
+        </a>
+      </li>
+      <li>
+        <a href="/admin/orders">
+          <i class="fas fa-shopping-bag"></i>
+          <h2 class="menu-title">Orders</h2>
+          <p class="menu-description">View and manage customer orders</p>
+        </a>
+      </li>
+      <li>
+        <a href="/admin/users">
+          <i class="fas fa-users"></i>
+          <h2 class="menu-title">Users</h2>
+          <p class="menu-description">Manage user accounts and permissions</p>
+        </a>
+      </li>
+      <li>
+        <a href="/admin/products">
+          <i class="fas fa-watch"></i>
+          <h2 class="menu-title">Products</h2>
+          <p class="menu-description">Manage your product catalog</p>
+        </a>
+      </li>
+      <li>
+        <a href="/admin/comments">
+          <i class="fas fa-comments"></i>
+          <h2 class="menu-title">Comments</h2>
+          <p class="menu-description">Moderate user comments and reviews</p>
+        </a>
+      </li>
+      <li>
+        <a href="/admin/analytics">
+          <i class="fas fa-chart-line"></i>
+          <h2 class="menu-title">Analytics</h2>
+          <p class="menu-description">View sales and performance metrics</p>
+        </a>
+      </li>
+      <li>
+        <a href="/admin/messages">
+          <i class="fas fa-envelope"></i>
+          <h2 class="menu-title">Contact Messages <span style="font-size:0.95em; color:var(--gold);">(<%= totalMessages || 0 %>)</span></h2>
+          <p class="menu-description">View and manage contact form messages</p>
+        </a>
+      </li>
+    </ul>
+  </div>
+</body>
+</html>

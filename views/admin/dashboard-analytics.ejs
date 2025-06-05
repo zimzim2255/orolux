@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>OROLUX Analytics Dashboard</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Montserrat:wght@300;400&display=swap">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    :root {
+      --deep-blue: #0a2440;
+      --cream: #f0f5ff;
+      --gold: #b4c4d6;
+      --light-gray: #e0e5f0;
+      --success-green: #4caf50;
+      --warning-orange: #ff9800;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      min-height: 100vh;
+      background: var(--cream);
+      color: var(--deep-blue);
+    }
+
+    .dashboard-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .dashboard-header {
+      background: var(--deep-blue);
+      padding: 2rem;
+      margin-bottom: 3rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .logo-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.5rem;
+      font-weight: 600;
+      color: var(--cream);
+      text-align: center;
+      letter-spacing: 4px;
+      margin-bottom: 0.5rem;
+    }
+
+    .analytics-text {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1rem;
+      color: var(--gold);
+      text-align: center;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .stat-card {
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .stat-title {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--deep-blue);
+      opacity: 0.7;
+      margin-bottom: 1rem;
+    }
+
+    .stat-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.5rem;
+      font-weight: 600;
+      color: var(--deep-blue);
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-subtitle {
+      font-size: 0.9rem;
+      color: var(--deep-blue);
+      opacity: 0.5;
+    }
+
+    .charts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .chart-container {
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .chart-title {
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: var(--deep-blue);
+      margin-bottom: 2rem;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .top-products {
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .product-list {
+      list-style: none;
+    }
+
+    .product-item {
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      gap: 2rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--light-gray);
+      transition: all 0.3s ease;
+    }
+
+    .product-item:hover {
+      background: var(--cream);
+      padding: 1rem;
+      border-radius: 4px;
+    }
+
+    .product-item:last-child {
+      border-bottom: none;
+    }
+
+    .product-name {
+      font-weight: 400;
+    }
+
+    .product-quantity,
+    .product-revenue {
+      text-align: right;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    .back-button {
+      display: inline-block;
+      padding: 1rem 2rem;
+      background: var(--deep-blue);
+      color: white;
+      text-decoration: none;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+      margin-top: 2rem;
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .back-button:hover {
+      background: #1a4275;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    @media (max-width: 768px) {
+      .dashboard-container {
+        padding: 1rem;
+      }
+
+      .charts-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .product-item {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+        text-align: center;
+      }
+
+      .product-quantity,
+      .product-revenue {
+        text-align: center;
+      }
+
+      .stat-value {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard-container">
+    <header class="dashboard-header">
+      <h1 class="logo-text">OROLUX</h1>
+      <div class="analytics-text">Analytics Dashboard</div>
+    </header>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-title">Total Sales</div>
+        <div class="stat-value">$<%= totalSales %></div>
+        <div class="stat-subtitle">Revenue</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-title">Users</div>
+        <div class="stat-value"><%= totalUsers %></div>
+        <div class="stat-subtitle">Registered Accounts</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-title">Total Orders</div>
+        <div class="stat-value"><%= totalOrders %></div>
+        <div class="stat-subtitle">All Time</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-title">Pending Orders</div>
+        <div class="stat-value"><%= pendingOrders %></div>
+        <div class="stat-subtitle">Awaiting Processing</div>
+      </div>
+    </div>
+
+    <div class="charts-grid">
+      <div class="chart-container">
+        <h2 class="chart-title">Monthly Orders</h2>
+        <canvas id="orderChart"></canvas>
+      </div>
+      <div class="top-products">
+        <h2 class="chart-title">Top Selling Products</h2>
+        <ul class="product-list">
+          <% topProducts.forEach(product => { %>
+            <li class="product-item">
+              <span class="product-name"><%= product.name %></span>
+              <span class="product-quantity"><%= product.totalQuantity %> units</span>
+              <span class="product-revenue">$<%= product.totalRevenue.toFixed(2) %></span>
+            </li>
+          <% }); %>
+        </ul>
+      </div>
+    </div>
+
+    <a href="/admin/dashboard" class="back-button">Back to Dashboard</a>
+  </div>
+  <script>    // Monthly Orders Chart
+    const ctx = document.getElementById('orderChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: JSON.parse('<%- JSON.stringify(months) %>'),
+        datasets: [{
+          label: 'Orders',
+          data: JSON.parse('<%- JSON.stringify(orderCounts) %>'),
+          borderColor: '#b4c4d6',
+          backgroundColor: 'rgba(180, 196, 214, 0.1)',
+          tension: 0.4,
+          fill: true
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            display: false
+          },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                return `${context.parsed.y} orders`;
+              }
+            }
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              stepSize: 1,
+              precision: 0 // Only show whole numbers
+            }
+          },
+          x: {
+            grid: {
+              display: false // Clean up x-axis
+            }
+          }
+        },
+        interaction: {
+          intersect: false,
+          mode: 'index'
+        }
+      }
+    });
+  </script>
+</body>
+</html>

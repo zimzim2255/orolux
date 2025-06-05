@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>OROLUX Admin Login</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Montserrat:wght@300;400&display=swap">
+  <style>
+    :root {
+      --deep-blue: #0a2440;
+      --cream: #f0f5ff;
+      --gold: #b4c4d6;
+      --light-gray: #e0e5f0;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      min-height: 100vh;
+      background: linear-gradient(135deg, 
+        var(--deep-blue) 0%,
+        rgba(10, 36, 64, 0.95) 50%,
+        var(--deep-blue) 100%
+      );
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .login-container {
+      width: 100%;
+      max-width: 420px;
+      padding: 3rem;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 8px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    }
+
+    .logo-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.5rem;
+      font-weight: 600;
+      color: var(--deep-blue);
+      text-align: center;
+      margin-bottom: 0.5rem;
+      letter-spacing: 4px;
+    }
+
+    .admin-text {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.9rem;
+      color: var(--deep-blue);
+      text-align: center;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 3rem;
+      opacity: 0.8;
+    }
+
+    .form-group {
+      margin-bottom: 2rem;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.9rem;
+      color: var(--deep-blue);
+      margin-bottom: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 1rem;
+      border: 2px solid var(--gold);
+      border-radius: 4px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1rem;
+      color: var(--deep-blue);
+      transition: all 0.3s ease;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--deep-blue);
+      box-shadow: 0 2px 8px rgba(10, 36, 64, 0.1);
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 1.25rem;
+      background: var(--deep-blue);
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      cursor: pointer;
+      transition: all 0.4s ease;
+      margin-top: 1rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .login-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+      );
+      transition: 0.5s;
+    }
+
+    .login-btn:hover {
+      background-color: #1a4275;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(10, 50, 100, 0.2);
+    }
+
+    .login-btn:hover::before {
+      left: 100%;
+    }
+
+    .alert {
+      padding: 1rem;
+      border-radius: 4px;
+      margin-bottom: 1.5rem;
+      text-align: center;
+      display: none;
+    }
+
+    .alert-error {
+      background: rgba(244, 67, 54, 0.1);
+      color: #f44336;
+      border: 1px solid rgba(244, 67, 54, 0.2);
+    }
+
+    @media (max-width: 480px) {
+      .login-container {
+        padding: 2rem;
+      }
+
+      .logo-text {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h1 class="logo-text">OROLUX</h1>
+    <div class="admin-text">Administrator Portal</div>
+    <div id="error-alert" class="alert alert-error"></div>
+    <form action="/admin/login" method="POST">
+      <div class="form-group">
+        <label class="form-label" for="email">Email</label>
+        <input type="email" id="email" name="email" class="form-input" required autocomplete="email">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="password">Password</label>
+        <input type="password" id="password" name="password" class="form-input" required autocomplete="current-password">
+      </div>
+      <button type="submit" class="login-btn">Sign In</button>
+    </form>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $('form').on('submit', function(event) {
+        event.preventDefault();
+        
+        const errorAlert = $('#error-alert');
+        errorAlert.hide();
+
+        $.ajax({
+          type: 'POST',
+          url: '/admin/login',
+          data: {
+            email: $('#email').val(),
+            password: $('#password').val()
+          },
+          success: function(response) {
+            if (response === "Invalid Credentials") {
+              errorAlert.text("Invalid email or password").fadeIn();
+            } else {
+              window.location.href = '/admin/dashboard';
+            }
+          },
+          error: function() {
+            errorAlert.text("Login failed. Please try again.").fadeIn();
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
