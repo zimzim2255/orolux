@@ -9,15 +9,20 @@
       "src": "public/**",
       "use": "@vercel/static"
     }
+<<<<<<< HEAD
   ],  "env": {
     "NODE_ENV": "production"
   },
+=======
+  ],
+>>>>>>> 9996ad2d118247ab3ccc066eee790cc5417ac384
   "routes": [
     {
       "src": "/images/(.*)",
       "dest": "/public/images/$1"
     },
     {
+<<<<<<< HEAD
       "src": "/css/(.*)",
       "dest": "/public/css/$1"
     },
@@ -29,6 +34,8 @@
       "handle": "filesystem"
     },
     {
+=======
+>>>>>>> 9996ad2d118247ab3ccc066eee790cc5417ac384
       "src": "/(.*)",
       "dest": "/server.js"
     }

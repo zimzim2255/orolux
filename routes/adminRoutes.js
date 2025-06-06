@@ -243,6 +243,7 @@ router.post("/admin/add-product", ensureAdmin, async (req, res) => {
         return res.status(400).send(err.message);
       }
 
+<<<<<<< HEAD
       try {
         let imageUrl = '';
         if (req.file) {
@@ -262,6 +263,16 @@ router.post("/admin/add-product", ensureAdmin, async (req, res) => {
         console.error('Product creation error:', error);
         res.status(500).send("Error adding product");
       }
+=======
+      const productData = {
+        ...req.body,
+        image: req.file ? req.file.filename : ''
+      };
+
+      const product = new Product(productData);
+      await product.save();
+      res.redirect("/admin/products");
+>>>>>>> 9996ad2d118247ab3ccc066eee790cc5417ac384
     });
   } catch (error) {
     console.error(error);
@@ -286,6 +297,7 @@ router.post("/admin/update-product/:id", ensureAdmin, async (req, res) => {
         return res.status(400).send(err.message);
       }
 
+<<<<<<< HEAD
       try {
         const product = await Product.findById(req.params.id);
         if (!product) {
@@ -310,6 +322,32 @@ router.post("/admin/update-product/:id", ensureAdmin, async (req, res) => {
         console.error('Product update error:', error);
         res.status(500).send("Error updating product");
       }
+=======
+      const product = await Product.findById(req.params.id);
+      if (!product) {
+        return res.status(404).send("Product not found");
+      }
+
+      // If a new file was uploaded, delete the old one and update the image field
+      if (req.file) {
+        if (product.image) {
+          const oldImagePath = path.join(__dirname, '../public/images', product.image);
+          if (fs.existsSync(oldImagePath)) {
+            fs.unlinkSync(oldImagePath);
+          }
+        }
+        product.image = req.file.filename;
+      }
+
+      // Update other fields
+      Object.assign(product, {
+        ...req.body,
+        image: product.image // Keep the updated image filename
+      });
+
+      await product.save();
+      res.redirect("/admin/products");
+>>>>>>> 9996ad2d118247ab3ccc066eee790cc5417ac384
     });
   } catch (error) {
     console.error(error);
@@ -320,6 +358,22 @@ router.post("/admin/update-product/:id", ensureAdmin, async (req, res) => {
 // Delete Product
 router.get("/admin/delete-product/:id", ensureAdmin, async (req, res) => {
   try {
+<<<<<<< HEAD
+=======
+    const product = await Product.findById(req.params.id);
+    if (!product) {
+      return res.status(404).send("Product not found");
+    }
+
+    // Delete the associated image file
+    if (product.image) {
+      const imagePath = path.join(__dirname, '../public/images', product.image);
+      if (fs.existsSync(imagePath)) {
+        fs.unlinkSync(imagePath);
+      }
+    }
+
+>>>>>>> 9996ad2d118247ab3ccc066eee790cc5417ac384
     await Product.findByIdAndDelete(req.params.id);
     res.redirect("/admin/products");
   } catch (error) {
