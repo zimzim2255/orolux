@@ -61,6 +61,7 @@ const userRoutes = require("./routes/userRoutes");
 const cartRoutes = require("./routes/cartRoutes"); // <-- Added
 const wishlistRoutes = require("./routes/wishlistRoutes"); // <-- Added wishlist routes
 const promoRoutes = require("./routes/promoRoutes"); // <-- Added promo routes
+const adminProductRoutes = require("./routes/adminProductRoutes");
 
 // Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -155,6 +156,7 @@ app.use(userRoutes);
 app.use(cartRoutes); // <-- Added
 app.use(wishlistRoutes); // <-- Added wishlist routes
 app.use(promoRoutes); // <-- Added promo routes
+app.use(adminProductRoutes);
 
 // Enhanced error handling
 app.use((err, req, res, next) => {

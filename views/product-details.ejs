@@ -254,66 +254,39 @@
   <%- include('partials/header') %>
   
   <div class="product-container">
-    <!-- Product Image -->
-    <div class="product-image">
-        <img src="<%= product.image %>" 
-             alt="<%= product.name %>"
-             loading="lazy">
-    </div>
-
-    <!-- Product Details -->
-    <div class="product-details">
-      <h1 class="product-name"><%= product.name %></h1>
-      <p class="product-price"><%= product.price.toLocaleString() %> DH</p>
-      <p class="product-description"><%= product.description %></p>      <form action="/cart/add" method="POST" class="add-to-cart-form">
-        <input type="hidden" name="productId" value="<%= product._id %>">
-        <label class="quantity-label">Quantity</label>
-        <input type="number" name="quantity" value="1" min="1" class="quantity-input">
-        <div class="product-actions">
-          <button type="submit" class="add-to-cart-btn">
-            <svg class="w-5 h-5 mr-2 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-            </svg>
-            Add to Cart
-          </button>
-          <a href="/wishlist/add/<%= product._id %>" class="wishlist-btn">
-            <svg class="w-5 h-5 mr-2 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-            </svg>
-            Add to Wishlist
-          </a>
+    <% if (product) { %>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 p-8">
+        <div class="product-image">
+          <img 
+            src="<%= product.image %>" 
+            alt="<%= product.name %>"
+            class="w-full h-auto object-cover rounded-lg shadow-lg"
+          >
         </div>
-      </form>
-
-      <!-- Comments Section -->
-      <div class="comments-section">
-        <h3 class="comments-title">Customer Reviews</h3>
-        
-        <% if (product.comments && product.comments.length > 0) { %>
-          <% product.comments.forEach(comment => { %>
-            <div class="comment">
-              <p class="comment-username"><%= comment.username %></p>
-              <p class="comment-text"><%= comment.text %></p>
-              <p class="comment-date"><%= new Date(comment.createdAt).toLocaleString() %></p>
+        <div class="product-details">
+          <h1 class="product-name"><%= product.name %></h1>
+          <div class="product-price">$<%= product.price.toFixed(2) %></div>
+          <p class="product-description"><%= product.description %></p>
+          
+          <form action="/cart/add" method="POST" class="add-to-cart-form">
+            <input type="hidden" name="productId" value="<%= product._id %>">
+            <div class="mb-4">
+              <label class="quantity-label">Quantity:</label>
+              <input type="number" name="quantity" value="1" min="1" class="quantity-input">
             </div>
-          <% }) %>
-        <% } else { %>
-          <p class="comment-text">No reviews yet. Be the first to review this timepiece.</p>
-        <% } %>
-
-        <!-- Comment Form -->
-        <div class="comment-form">
-          <h4 class="comment-form-title">Write a Review</h4>
-          <form action="/product/<%= product._id %>/add-comment" method="POST">
-            <input type="text" name="username" placeholder="Your Name" required class="comment-input">
-            <textarea name="text" placeholder="Your Review" required class="comment-textarea"></textarea>
-            <button type="submit" class="add-to-cart-btn">Submit Review</button>
+            <button type="submit" class="add-to-cart-btn">Add to Cart</button>
           </form>
+          
+          <div class="product-actions mt-4">
+            <a href="/wishlist/add/<%= product._id %>" class="text-blue-600 hover:text-blue-800">
+              Add to Wishlist ❤
+            </a>
+          </div>
         </div>
       </div>
-
-      <a href="/products" class="back-link">⬅ Back to Collection</a>
-    </div>
+    <% } else { %>
+      <p class="text-center text-gray-600 py-8">Product not found.</p>
+    <% } %>
   </div>
 
   <%- include('partials/footer') %>

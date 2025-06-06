@@ -28,7 +28,8 @@
 </head>
 <body class="font-sans antialiased">
   <%- include('partials/header') %>
-  <!-- Hero Section with Swiper -->
+  
+  <!-- Hero Section -->
   <div class="swiper hero-slider relative h-screen w-full overflow-hidden">
     <div class="swiper-wrapper">
       <!-- Slide 1 -->
@@ -124,6 +125,34 @@
     <div class="swiper-pagination !bottom-8 !right-8 !left-auto !w-auto"></div>
   </div>
 
+  <!-- New Arrivals Section -->
+  <section class="py-20 bg-white">
+    <div class="container mx-auto px-4">
+      <h2 class="text-4xl font-bold text-center mb-12">New Arrivals</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <% if (newArrivals && newArrivals.length > 0) { %>
+          <% newArrivals.forEach(product => { %>
+            <div class="group">
+              <a href="/product/<%= product._id %>" class="block relative overflow-hidden rounded-lg shadow-lg">
+                <img 
+                  src="<%= product.image %>" 
+                  alt="<%= product.name %>"
+                  class="w-full h-80 object-cover transition-transform duration-300 transform group-hover:scale-110"
+                >
+                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-6">
+                  <h3 class="text-white font-semibold text-xl"><%= product.name %></h3>
+                  <p class="text-gray-300 mt-2">$<%= product.price.toFixed(2) %></p>
+                </div>
+              </a>
+            </div>
+          <% }) %>
+        <% } else { %>
+          <p class="text-center text-gray-600 col-span-3">No new arrivals at the moment.</p>
+        <% } %>
+      </div>
+    </div>
+  </section>
+
   <!-- Newsletter Section -->
   <div class="container mx-auto py-20 px-4">
     <div class="max-w-xl mx-auto text-center">
@@ -145,43 +174,6 @@
           </button>
         </form>
       </div>
-    </div>
-  </div>
-
-  <!-- New Arrivals Section -->
-  <div class="wrapper--full bg-gray-50 py-16">
-    <div class="collection-list-item max-w-[90rem] mx-auto px-4">
-        <div class="collection-list__heading__text mb-12 text-center">            <a href="/collections/all-watches" class="hero__title text-3xl font-light tracking-wide text-blue-900 hover:text-blue-700 transition-colors" title="Browse our New Arrivals collection">
-                New Arrivals
-            </a>
-        </div>        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12" data-grid-large="3" data-grid-small="2">
-            <% if (newArrivals && newArrivals.length > 0) { %>
-                <% newArrivals.forEach(product => { %>
-                    <div class="product-grid-item group">
-                        <div class="product-grid-item__container bg-white shadow-lg hover:shadow-xl transition-shadow duration-300">
-                            <a href="/product/<%= product._id %>" class="block relative">
-                                <% if (Date.now() - new Date(product.createdAt).getTime() < 7 * 24 * 60 * 60 * 1000) { %>
-                                    <div class="absolute top-4 right-4 bg-black text-white px-3 py-1 text-xs uppercase tracking-wider z-10">New</div>
-                                <% } %>
-                                <div class="product-grid-item__images relative aspect-square overflow-hidden">
-                    <img src="/images/<%= product.image %>" 
-                         alt="<%= product.name %>" 
-                         class="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110">
-                </div>                                <div class="product__grid__info p-6 text-center">                                    <h3 class="product__grid__title text-lg font-light text-blue-900 mb-2"><%= product.name %></h3>
-                                    <p class="text-blue-700/70 font-semibold"><%= product.price.toLocaleString() %> DH</p>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                <% }) %>
-                <% if (newArrivals.length < 6) { %>
-                    <% for(let i = 0; i < 6 - newArrivals.length; i++) { %>
-                        <div class="product-grid-item group opacity-0"></div>
-                    <% } %>
-                <% } %>
-            <% } else { %>
-                <p class="col-span-3 text-center text-gray-500">No new arrivals at the moment.</p>
-            <% } %>        </div>
     </div>
   </div>
 
