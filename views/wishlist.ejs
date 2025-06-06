@@ -176,7 +176,7 @@
 <div class="wishlist-container">
   <h2 class="wishlist-title">Your Wish List</h2>
 
-  <% if (wishlist.length === 0) { %>
+  <% if (!wishlist || wishlist.length === 0) { %>
     <div class="empty-wishlist">
       <p>Your wish list is empty.</p>
       <a href="/products" class="continue-shopping-btn">Continue Shopping</a>
@@ -184,22 +184,28 @@
   <% } else { %>
     <div class="product-grid">
       <% wishlist.forEach(item => { %>
-        <div class="product-card">
-          <div class="product-image-container">
-            <img src="<%= item.product.image %>" alt="<%= item.product.name %>" class="product-image">          </div>
-          <div class="product-info">
-            <h3 class="product-name"><%= item.product.name %></h3>
-            <p class="product-price"><%= item.product.price.toLocaleString() %> DH</p>
-            <div class="product-actions">
-              <a href="/product/<%= item.product._id %>" class="view-details-btn">View Details</a>
-              <a href="/wishlist/remove/<%= item._id %>" class="remove-btn">Remove</a>
+        <% if (item && item.product) { %>
+          <div class="product-card">
+            <div class="product-image-container">
+              <img src="<%= item.product.image || '/images/default-product.jpg' %>" 
+                   alt="<%= item.product.name || 'Product' %>" 
+                   class="product-image">
+            </div>
+            <div class="product-info">
+              <h3 class="product-name"><%= item.product.name || 'Product Name' %></h3>
+              <p class="product-price"><%= item.product.price ? item.product.price.toLocaleString() : '0' %> DH</p>
+              <div class="product-actions">
+                <a href="/product/<%= item.product._id %>" class="view-details-btn">View Details</a>
+                <a href="/wishlist/remove/<%= item._id %>" class="remove-btn">Remove</a>
+              </div>
             </div>
           </div>
-        </div>
+        <% } %>
       <% }) %>
     </div>
     <div style="text-align: center;">
-      <a href="/products" class="continue-shopping-btn">Continue Shopping</a>    </div>
+      <a href="/products" class="continue-shopping-btn">Continue Shopping</a>
+    </div>
   <% } %>
 </div>
 
