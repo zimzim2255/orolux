@@ -171,6 +171,26 @@
     color: white;
     transform: translateY(-2px);
   }
+
+  .toast-notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 1rem 2rem;
+    background: var(--deep-blue);
+    color: white;
+    border-radius: 4px;
+    font-family: 'Montserrat', sans-serif;
+    z-index: 1000;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: all 0.3s ease;
+  }
+
+  .toast-notification.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
 </style>
 
 <div class="wishlist-container">
@@ -208,5 +228,45 @@
     </div>
   <% } %>
 </div>
+
+<div id="toast" class="toast-notification"></div>
+
+<script>
+function showToast(message) {
+  const toast = document.getElementById('toast');
+  toast.textContent = message;
+  toast.classList.add('show');
+  setTimeout(() => {
+    toast.classList.remove('show');
+  }, 3000);
+}
+
+// Convert remove links to AJAX calls
+document.addEventListener('DOMContentLoaded', () => {
+  const removeButtons = document.querySelectorAll('.remove-btn');
+  removeButtons.forEach(btn => {
+    btn.addEventListener('click', async (e) => {
+      e.preventDefault();
+      const url = e.target.href;
+      try {
+        const response = await fetch(url, { method: 'GET' });
+        if (response.ok) {
+          const card = e.target.closest('.product-card');
+          card.remove();
+          showToast('Item removed from wishlist');
+          
+          // Check if wishlist is empty after removal
+          const remainingCards = document.querySelectorAll('.product-card');
+          if (remainingCards.length === 0) {
+            location.reload(); // Reload to show empty wishlist state
+          }
+        }
+      } catch (error) {
+        showToast('Error removing item from wishlist');
+      }
+    });
+  });
+});
+</script>
 
 <%- include('partials/footer') %>
