@@ -10,6 +10,9 @@
       "use": "@vercel/static"
     }
   ],
+  "env": {
+    "NODE_ENV": "production"
+  },
   "routes": [
     {
       "src": "/images/(.*)",

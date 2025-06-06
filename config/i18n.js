@@ -15,7 +15,7 @@ i18next
     },
     fallbackLng: 'en',
     supportedLngs: ['en', 'ar'],
-    preload: ['en', 'ar'],
+    preload: ['ar'],
     defaultNS: 'common',
     ns: ['common'],
     detection: {
