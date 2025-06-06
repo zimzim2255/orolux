@@ -186,7 +186,7 @@
       <% wishlist.forEach(item => { %>
         <div class="product-card">
           <div class="product-image-container">
-            <img src="/images/<%= item.product.image %>" alt="<%= item.product.name %>" class="product-image">          </div>
+            <img src="<%= item.product.image %>" alt="<%= item.product.name %>" class="product-image">          </div>
           <div class="product-info">
             <h3 class="product-name"><%= item.product.name %></h3>
             <p class="product-price"><%= item.product.price.toLocaleString() %> DH</p>

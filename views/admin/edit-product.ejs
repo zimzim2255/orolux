@@ -168,17 +168,15 @@
         <div class="form-group">
           <label class="form-label">Description</label>
           <textarea name="description" required class="form-input form-textarea"><%= product.description %></textarea>
-        </div>
-
-        <div class="form-group">          <label class="form-label">Current Image</label>
+        </div>        <div class="form-group">
+          <label class="form-label">Current Image</label>
           <% if (product.image) { %>
             <img src="<%= product.image %>" alt="Current product image" style="max-width: 200px; margin: 10px 0;">
           <% } %>
           <label class="form-label">Change Image (optional)</label>
           <input type="file" name="image" accept="image/*" class="form-input">
           <small class="form-text">Supported formats: JPG, PNG, GIF. Max size: 5MB</small>
-          <input type="hidden" name="currentImage" value="<%= product.image %>">
->>>>>>> 9996ad2d118247ab3ccc066eee790cc5417ac384
+          <input type="hidden" name="currentImage" value="<%= product.image %>"
         </div>
 
         <button type="submit" class="submit-button">Update Product</button>
