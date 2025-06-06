@@ -1,9 +1,10 @@
 {
   "common": {
+    "pageTitle": "Luxury Watches",
     "menu": {
       "home": "Home",
       "shop": "Shop",
-      "about": "About Us",
+      "about": "About",
       "contact": "Contact"
     },
     "cart": {

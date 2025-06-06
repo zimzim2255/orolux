@@ -4,6 +4,8 @@ const Backend = require('i18next-fs-backend');
 const path = require('path');
 const acceptLanguageParser = require('accept-language-parser');
 
+// Configure i18next
+
 i18next
   .use(Backend)
   .use(i18nextMiddleware.LanguageDetector)
@@ -14,6 +16,8 @@ i18next
     fallbackLng: 'en',
     supportedLngs: ['en', 'ar'],
     preload: ['en', 'ar'],
+    defaultNS: 'common',
+    ns: ['common'],
     detection: {
       order: ['header'],
       lookupHeader: 'accept-language',

@@ -166,8 +166,11 @@
         <tr>
           <td>
             <div class="product-cell">
-              <img src="/images/<%= product.image %>" class="product-image" alt="<%= product.name %>">
-              <span class="product-name"><%= product.name %></span>          </div>
+              <img src="<%= product.image %>" 
+                   class="product-image" 
+                   alt="<%= product.name %>">
+              <span class="product-name"><%= product.name %></span>
+            </div>
           </td>
           <td><%= product.price.toFixed(2) %> DH</td>
           <td>

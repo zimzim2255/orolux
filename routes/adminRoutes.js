@@ -243,14 +243,25 @@ router.post("/admin/add-product", ensureAdmin, async (req, res) => {
         return res.status(400).send(err.message);
       }
 
-      const productData = {
-        ...req.body,
-        image: req.file ? req.file.filename : ''
-      };
+      try {
+        let imageUrl = '';
+        if (req.file) {
+          const result = await req.app.locals.uploadToCloudinary(req.file);
+          imageUrl = result.secure_url;
+        }
 
-      const product = new Product(productData);
-      await product.save();
-      res.redirect("/admin/products");
+        const productData = {
+          ...req.body,
+          image: imageUrl
+        };
+
+        const product = new Product(productData);
+        await product.save();
+        res.redirect("/admin/products");
+      } catch (error) {
+        console.error('Product creation error:', error);
+        res.status(500).send("Error adding product");
+      }
     });
   } catch (error) {
     console.error(error);
@@ -275,30 +286,30 @@ router.post("/admin/update-product/:id", ensureAdmin, async (req, res) => {
         return res.status(400).send(err.message);
       }
 
-      const product = await Product.findById(req.params.id);
-      if (!product) {
-        return res.status(404).send("Product not found");
-      }
-
-      // If a new file was uploaded, delete the old one and update the image field
-      if (req.file) {
-        if (product.image) {
-          const oldImagePath = path.join(__dirname, '../public/images', product.image);
-          if (fs.existsSync(oldImagePath)) {
-            fs.unlinkSync(oldImagePath);
-          }
+      try {
+        const product = await Product.findById(req.params.id);
+        if (!product) {
+          return res.status(404).send("Product not found");
         }
-        product.image = req.file.filename;
+
+        // If a new file was uploaded, update the image
+        if (req.file) {
+          const result = await req.app.locals.uploadToCloudinary(req.file);
+          product.image = result.secure_url;
+        }
+
+        // Update other fields
+        Object.assign(product, {
+          ...req.body,
+          image: product.image // Keep the updated image URL
+        });
+
+        await product.save();
+        res.redirect("/admin/products");
+      } catch (error) {
+        console.error('Product update error:', error);
+        res.status(500).send("Error updating product");
       }
-
-      // Update other fields
-      Object.assign(product, {
-        ...req.body,
-        image: product.image // Keep the updated image filename
-      });
-
-      await product.save();
-      res.redirect("/admin/products");
     });
   } catch (error) {
     console.error(error);
@@ -309,19 +320,6 @@ router.post("/admin/update-product/:id", ensureAdmin, async (req, res) => {
 // Delete Product
 router.get("/admin/delete-product/:id", ensureAdmin, async (req, res) => {
   try {
-    const product = await Product.findById(req.params.id);
-    if (!product) {
-      return res.status(404).send("Product not found");
-    }
-
-    // Delete the associated image file
-    if (product.image) {
-      const imagePath = path.join(__dirname, '../public/images', product.image);
-      if (fs.existsSync(imagePath)) {
-        fs.unlinkSync(imagePath);
-      }
-    }
-
     await Product.findByIdAndDelete(req.params.id);
     res.redirect("/admin/products");
   } catch (error) {
