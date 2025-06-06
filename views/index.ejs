@@ -177,46 +177,7 @@
     </div>
   </div>
 
-<<<<<<< HEAD
-=======
-  <!-- New Arrivals Section -->
-  <div class="wrapper--full bg-gray-50 py-16">
-    <div class="collection-list-item max-w-[90rem] mx-auto px-4">
-        <div class="collection-list__heading__text mb-12 text-center">            <a href="/collections/all-watches" class="hero__title text-3xl font-light tracking-wide text-blue-900 hover:text-blue-700 transition-colors" title="Browse our New Arrivals collection">
-                New Arrivals
-            </a>
-        </div>        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12" data-grid-large="3" data-grid-small="2">
-            <% if (newArrivals && newArrivals.length > 0) { %>
-                <% newArrivals.forEach(product => { %>
-                    <div class="product-grid-item group">
-                        <div class="product-grid-item__container bg-white shadow-lg hover:shadow-xl transition-shadow duration-300">
-                            <a href="/product/<%= product._id %>" class="block relative">
-                                <% if (Date.now() - new Date(product.createdAt).getTime() < 7 * 24 * 60 * 60 * 1000) { %>
-                                    <div class="absolute top-4 right-4 bg-black text-white px-3 py-1 text-xs uppercase tracking-wider z-10">New</div>
-                                <% } %>
-                                <div class="product-grid-item__images relative aspect-square overflow-hidden">
-                    <img src="/images/<%= product.image %>" 
-                         alt="<%= product.name %>" 
-                         class="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110">
-                </div>                                <div class="product__grid__info p-6 text-center">                                    <h3 class="product__grid__title text-lg font-light text-blue-900 mb-2"><%= product.name %></h3>
-                                    <p class="text-blue-700/70 font-semibold"><%= product.price.toLocaleString() %> DH</p>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                <% }) %>
-                <% if (newArrivals.length < 6) { %>
-                    <% for(let i = 0; i < 6 - newArrivals.length; i++) { %>
-                        <div class="product-grid-item group opacity-0"></div>
-                    <% } %>
-                <% } %>
-            <% } else { %>
-                <p class="col-span-3 text-center text-gray-500">No new arrivals at the moment.</p>
-            <% } %>        </div>
-    </div>
-  </div>
 
->>>>>>> 9996ad2d118247ab3ccc066eee790cc5417ac384
   <!-- Featured Watch Section -->
   <div class="grid grid-cols-1 lg:grid-cols-2 min-h-screen">
     <!-- Image Section -->
