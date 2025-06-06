@@ -254,19 +254,9 @@
   <%- include('partials/header') %>
   
   <div class="product-container">
-<<<<<<< HEAD
-    <% if (product) { %>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 p-8">
-        <div class="product-image">
-          <img 
-            src="<%= product.image %>" 
-            alt="<%= product.name %>"
-            class="w-full h-auto object-cover rounded-lg shadow-lg"
-          >
-=======
     <!-- Product Image -->
     <div class="product-image">
-        <img src="/images/<%= product.image %>" 
+        <img src="<%= product.image %>" 
              alt="<%= product.name %>"
              loading="lazy">
     </div>
@@ -292,32 +282,38 @@
             </svg>
             Add to Wishlist
           </a>
->>>>>>> 9996ad2d118247ab3ccc066eee790cc5417ac384
         </div>
-        <div class="product-details">
-          <h1 class="product-name"><%= product.name %></h1>
-          <div class="product-price">$<%= product.price.toFixed(2) %></div>
-          <p class="product-description"><%= product.description %></p>
-          
-          <form action="/cart/add" method="POST" class="add-to-cart-form">
-            <input type="hidden" name="productId" value="<%= product._id %>">
-            <div class="mb-4">
-              <label class="quantity-label">Quantity:</label>
-              <input type="number" name="quantity" value="1" min="1" class="quantity-input">
+      </form>
+
+      <!-- Comments Section -->
+      <div class="comments-section">
+        <h3 class="comments-title">Customer Reviews</h3>
+        
+        <% if (product.comments && product.comments.length > 0) { %>
+          <% product.comments.forEach(comment => { %>
+            <div class="comment">
+              <p class="comment-username"><%= comment.username %></p>
+              <p class="comment-text"><%= comment.text %></p>
+              <p class="comment-date"><%= new Date(comment.createdAt).toLocaleString() %></p>
             </div>
-            <button type="submit" class="add-to-cart-btn">Add to Cart</button>
+          <% }) %>
+        <% } else { %>
+          <p class="comment-text">No reviews yet. Be the first to review this timepiece.</p>
+        <% } %>
+
+        <!-- Comment Form -->
+        <div class="comment-form">
+          <h4 class="comment-form-title">Write a Review</h4>
+          <form action="/product/<%= product._id %>/add-comment" method="POST">
+            <input type="text" name="username" placeholder="Your Name" required class="comment-input">
+            <textarea name="text" placeholder="Your Review" required class="comment-textarea"></textarea>
+            <button type="submit" class="add-to-cart-btn">Submit Review</button>
           </form>
-          
-          <div class="product-actions mt-4">
-            <a href="/wishlist/add/<%= product._id %>" class="text-blue-600 hover:text-blue-800">
-              Add to Wishlist ❤
-            </a>
-          </div>
         </div>
       </div>
-    <% } else { %>
-      <p class="text-center text-gray-600 py-8">Product not found.</p>
-    <% } %>
+
+      <a href="/products" class="back-link">⬅ Back to Collection</a>
+    </div>
   </div>
 
   <%- include('partials/footer') %>

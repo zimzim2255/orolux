@@ -170,17 +170,10 @@
           <textarea name="description" required class="form-input form-textarea"><%= product.description %></textarea>
         </div>
 
-        <div class="form-group">
-          <label class="form-label">Current Image</label>
-<<<<<<< HEAD
+        <div class="form-group">          <label class="form-label">Current Image</label>
           <% if (product.image) { %>
             <img src="<%= product.image %>" alt="Current product image" style="max-width: 200px; margin: 10px 0;">
           <% } %>
-          <label class="form-label">Change Image (optional)</label>
-          <input type="file" name="image" accept="image/*" class="form-input">
-          <small class="form-text">Supported formats: JPG, PNG, GIF. Max size: 5MB</small>
-=======
-          <img src="/images/<%= product.image %>" alt="Current product image" style="max-width: 200px; margin: 10px 0;">
           <label class="form-label">Change Image (optional)</label>
           <input type="file" name="image" accept="image/*" class="form-input">
           <small class="form-text">Supported formats: JPG, PNG, GIF. Max size: 5MB</small>
