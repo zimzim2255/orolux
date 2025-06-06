@@ -13,10 +13,13 @@ function ensureUser(req, res, next) {
 
 // User Profile
 router.get("/profile", ensureUser, async (req, res) => {
-  const user = req.session.user;
+  // Get full user data
+  const user = await User.findById(req.session.user.id);
 
-  // Get user's orders
-  const orders = await Order.find({ userId: user._id }).sort({ createdAt: -1 });
+  // Get user's orders with populated product data
+  const orders = await Order.find({ userId: user._id })
+    .populate('products.productId')
+    .sort({ createdAt: -1 });
 
   res.render("profile", { user, orders });
 });
@@ -119,10 +122,9 @@ router.post("/login", async (req, res) => {
   const validPassword = await bcrypt.compare(password, user.password);
   if (!validPassword) {
     return res.send("Invalid Password");
-  }
-  // Save user in session
+  }  // Save user in session
   req.session.user = { id: user._id, email: user.email, username: user.username };
-  res.redirect("/profile");
+  res.redirect("/products");
 });
 
 // Logout

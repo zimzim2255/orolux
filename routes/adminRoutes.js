@@ -1,11 +1,14 @@
 const express = require("express");
 const router = express.Router();
+const fs = require('fs');
+const path = require('path');
 const User = require("../models/Users");
 const Order = require("../models/Order");
 const Product = require("../models/Product");
 const PageContent = require("../models/PageContent");
 const AdminUser = require("../models/AdminUser");
 const Message = require("../models/Message");
+const PromoCode = require("../models/PromoCode");
 const bcrypt = require("bcrypt");
 
 // Middleware to protect admin routes
@@ -231,9 +234,28 @@ router.get("/admin/add-product", ensureAdmin, (req, res) => {
 
 // Save New Product
 router.post("/admin/add-product", ensureAdmin, async (req, res) => {
-  const product = new Product(req.body);
-  await product.save();
-  res.redirect("/admin/products");
+  try {
+    const upload = req.app.locals.upload;
+    
+    upload.single('image')(req, res, async (err) => {
+      if (err) {
+        console.error('Upload error:', err);
+        return res.status(400).send(err.message);
+      }
+
+      const productData = {
+        ...req.body,
+        image: req.file ? req.file.filename : ''
+      };
+
+      const product = new Product(productData);
+      await product.save();
+      res.redirect("/admin/products");
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error adding product");
+  }
 });
 
 // Edit Product Form
@@ -244,14 +266,68 @@ router.get("/admin/edit-product/:id", ensureAdmin, async (req, res) => {
 
 // Update Product
 router.post("/admin/update-product/:id", ensureAdmin, async (req, res) => {
-  await Product.findByIdAndUpdate(req.params.id, req.body);
-  res.redirect("/admin/products");
+  try {
+    const upload = req.app.locals.upload;
+    
+    upload.single('image')(req, res, async (err) => {
+      if (err) {
+        console.error('Upload error:', err);
+        return res.status(400).send(err.message);
+      }
+
+      const product = await Product.findById(req.params.id);
+      if (!product) {
+        return res.status(404).send("Product not found");
+      }
+
+      // If a new file was uploaded, delete the old one and update the image field
+      if (req.file) {
+        if (product.image) {
+          const oldImagePath = path.join(__dirname, '../public/images', product.image);
+          if (fs.existsSync(oldImagePath)) {
+            fs.unlinkSync(oldImagePath);
+          }
+        }
+        product.image = req.file.filename;
+      }
+
+      // Update other fields
+      Object.assign(product, {
+        ...req.body,
+        image: product.image // Keep the updated image filename
+      });
+
+      await product.save();
+      res.redirect("/admin/products");
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error updating product");
+  }
 });
 
 // Delete Product
 router.get("/admin/delete-product/:id", ensureAdmin, async (req, res) => {
-  await Product.findByIdAndDelete(req.params.id);
-  res.redirect("/admin/products");
+  try {
+    const product = await Product.findById(req.params.id);
+    if (!product) {
+      return res.status(404).send("Product not found");
+    }
+
+    // Delete the associated image file
+    if (product.image) {
+      const imagePath = path.join(__dirname, '../public/images', product.image);
+      if (fs.existsSync(imagePath)) {
+        fs.unlinkSync(imagePath);
+      }
+    }
+
+    await Product.findByIdAndDelete(req.params.id);
+    res.redirect("/admin/products");
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error deleting product");
+  }
 });
 
 // Edit Pages (About/Terms/Contact)
@@ -362,14 +438,16 @@ router.post("/admin/orders/:id/status", ensureAdmin, async (req, res) => {
     
     if (order.userId) {
       const user = await User.findById(order.userId);
-      
-      // Handle completion status
-      if (status === "Completed" && !user.completedOrders.includes(order._id)) {
-        // Add to completed orders and update total spent
-        await User.findByIdAndUpdate(order.userId, {
-          $push: { completedOrders: order._id },
-          $inc: { totalSpent: order.total || 0 }
-        });
+        // Handle completion status
+      if (status === "Completed") {
+        // Only update if not already in completedOrders
+        if (!user.completedOrders || !user.completedOrders.includes(order._id)) {
+          // Add to completed orders and update total spent
+          await User.findByIdAndUpdate(order.userId, {
+            $push: { completedOrders: order._id },
+            $inc: { totalSpent: Number(order.total) || 0 }
+          });
+        }
       } 
       // Handle cancellation
       else if (status === "Cancelled" && oldStatus === "Completed") {
@@ -397,32 +475,35 @@ router.post("/admin/orders/:id/status", ensureAdmin, async (req, res) => {
 });
 
 // Recalculate All Users' Total Spent
-router.post("/admin/recalculate-total-spent", ensureAdmin, async (req, res) => {
+router.get("/admin/recalculate-totals", ensureAdmin, async (req, res) => {
   try {
-    // Get all users
     const users = await User.find();
     
-    // For each user
     for (const user of users) {
-      // Get all their non-cancelled orders
-      const orders = await Order.find({
+      // Get all completed orders for this user
+      const completedOrders = await Order.find({
         userId: user._id,
-        status: { $ne: "Cancelled" }
+        status: "Completed"
       });
       
-      // Calculate total spent
-      const totalSpent = orders.reduce((sum, order) => sum + (order.total || 0), 0);
+      // Calculate total spent from completed orders
+      const totalSpent = completedOrders.reduce((sum, order) => {
+        return sum + (Number(order.total) || 0);
+      }, 0);
       
       // Update user
       await User.findByIdAndUpdate(user._id, {
-        $set: { totalSpent: totalSpent }
-      });
+        $set: { 
+          totalSpent,
+          completedOrders: completedOrders.map(order => order._id)
+        }
+      }, { new: true });
     }
     
     res.redirect("/admin/users");
   } catch (error) {
-    console.error("Error recalculating total spent:", error);
-    res.status(500).send("Error recalculating total spent");
+    console.error("Error recalculating totals:", error);
+    res.status(500).send("Error recalculating totals");
   }
 });
 
@@ -443,15 +524,28 @@ router.get("/admin/messages/delete/:id", ensureAdmin, async (req, res) => {
   }
 });
 
-// Delete Message
-router.get("/admin/messages/delete/:id", ensureAdmin, async (req, res) => {
-  try {
-    await Message.findByIdAndDelete(req.params.id);
-    res.redirect("/admin/messages");
-  } catch (error) {
-    console.error("Error deleting message:", error);
-    res.status(500).send("Error deleting message");
-  }
+// View All Promo Codes
+router.get("/admin/promo-codes", ensureAdmin, async (req, res) => {
+  const promoCodes = await PromoCode.find();
+  res.render("admin/promo-codes", { promoCodes });
+});
+
+// Add Promo Code Form
+router.get("/admin/add-promo", ensureAdmin, (req, res) => {
+  res.render("admin/add-promo");
+});
+
+// Save New Promo Code
+router.post("/admin/add-promo", ensureAdmin, async (req, res) => {
+  const newCode = new PromoCode(req.body);
+  await newCode.save();
+  res.redirect("/admin/promo-codes");
+});
+
+// Delete Promo Code
+router.get("/admin/delete-promo/:id", ensureAdmin, async (req, res) => {
+  await PromoCode.findByIdAndDelete(req.params.id);
+  res.redirect("/admin/promo-codes");
 });
 
 module.exports = router;

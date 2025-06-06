@@ -364,11 +364,10 @@
                   <div class="product-item">
                     <div class="product-name">
                       <%= product.productId ? product.productId.name : 'Product not found' %>
-                    </div>
-                    <div class="product-pricing">
+                    </div>                    <div class="product-pricing">
                       <span class="product-quantity">× <%= product.quantity %></span>
                       <span class="product-total-price">
-                        $<%= ((product.price || (product.productId && product.productId.price) || 0) * product.quantity).toFixed(2) %>
+                        <%= ((product.price || (product.productId && product.productId.price) || 0) * product.quantity).toFixed(2) %> DH
                       </span>
                     </div>
                   </div>
@@ -380,8 +379,7 @@
               <%= order.deliveryInfo.phone %><br>
               <%= order.deliveryInfo.address %>
             </td>
-            <td>
-              <strong>$<%= order.total ? order.total.toFixed(2) : '0.00' %></strong>
+            <td>              <strong><%= order.total ? order.total.toFixed(2) : '0.00' %> DH</strong>
             </td>
             <td>
               <span class="status-badge status-<%= order.status.toLowerCase() %>">

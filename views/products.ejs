@@ -236,9 +236,9 @@
                   <a href="/product/<%= product._id %>">
                     <div class="product-grid-item__images">
                       <div class="product-grid-item__image-wrapper is-active">
-                        <div class="relative block w-full h-full overflow-hidden">
-                          <img src="/images/<%= product.image %>" alt="<%= product.name %>" class="product-grid-item__image">
-                        </div>
+                        <img src="/images/<%= product.image %>" 
+                             alt="<%= product.name %>" 
+                             class="product-grid-item__image">
                       </div>
                     </div>
                   </a>
@@ -251,7 +251,7 @@
                     <p class="product__grid__title"><%= product.name %></p>
                   </div>
                   <div class="product__grid__price">
-                    <span class="price">$<%= product.price %> USD</span>
+                    <span class="price"><%= product.price %> DH</span>
                   </div>
                 </a>
               </div>

@@ -150,12 +150,11 @@
 </head>
 <body>
   <div class="container">
-    <header class="header">
+    <div class="header">
       <h1>Edit Product</h1>
-    </header>
-
+    </div>
     <div class="form-container">
-      <form action="/admin/update-product/<%= product._id %>" method="POST">
+      <form action="/admin/edit-product/<%= product._id %>" method="POST" enctype="multipart/form-data">
         <div class="form-group">
           <label class="form-label">Product Name</label>
           <input type="text" name="name" value="<%= product.name %>" required class="form-input">
@@ -172,8 +171,12 @@
         </div>
 
         <div class="form-group">
-          <label class="form-label">Image Filename</label>
-          <input type="text" name="image" value="<%= product.image %>" required class="form-input">
+          <label class="form-label">Current Image</label>
+          <img src="/images/<%= product.image %>" alt="Current product image" style="max-width: 200px; margin: 10px 0;">
+          <label class="form-label">Change Image (optional)</label>
+          <input type="file" name="image" accept="image/*" class="form-input">
+          <small class="form-text">Supported formats: JPG, PNG, GIF. Max size: 5MB</small>
+          <input type="hidden" name="currentImage" value="<%= product.image %>">
         </div>
 
         <button type="submit" class="submit-button">Update Product</button>

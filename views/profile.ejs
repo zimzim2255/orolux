@@ -474,10 +474,9 @@
           <div class="info-grid">
             <div class="info-item">
               <p><span class="info-label"><%= t('profile.username') %>:</span> <%= user?.username || t('profile.notAvailable') %></p>
-              <p><span class="info-label"><%= t('profile.email') %>:</span> <%= user?.email || t('profile.notAvailable') %></p>
-              <p class="total-spent">
+              <p><span class="info-label"><%= t('profile.email') %>:</span> <%= user?.email || t('profile.notAvailable') %></p>              <p class="total-spent">
                 <span class="info-label"><%= t('profile.totalSpent') %>:</span> 
-                $<%= (user?.totalSpent || 0).toFixed(2) %>
+                <%= (user?.totalSpent || 0).toFixed(2) %> DH
               </p>
               <p><span class="info-label"><%= t('profile.memberSince') %>:</span> <%= new Date(user?.createdAt || Date.now()).toLocaleDateString(language) %></p>
             </div>
@@ -503,7 +502,7 @@
             <% orders.forEach(order => { %>
               <li class="order-item">
                 <p class="order-detail"><span class="info-label"><%= t('profile.orderId') %>:</span> <span class="order-id"><%= order?._id || t('profile.notAvailable') %></span></p>
-                <p class="order-detail"><span class="info-label"><%= t('profile.total') %>:</span> $<%= (order?.total || 0).toFixed(2) %></p>
+                <p class="order-detail"><span class="info-label"><%= t('profile.total') %>:</span> <%= (order?.total || 0).toFixed(2) %> DH</p>
                 <p class="order-detail"><span class="info-label"><%= t('profile.date') %>:</span> <%= new Date(order?.createdAt || Date.now()).toLocaleString(language) %></p>
                 <p class="order-detail"><span class="info-label"><%= t('profile.status') %>:</span> <span class="order-status <%= order?.status?.toLowerCase() %>"><%= t('profile.orderStatus.' + (order?.status?.toLowerCase() || 'processing')) %></span></p>
 
@@ -518,13 +517,19 @@
                 <div class="products-info">
                   <h4 class="info-subtitle"><%= t('profile.productsOrdered') %></h4>
                   <ul class="products-list">
+                    <% let orderTotal = 0; %>
                     <% order.products.forEach(item => { %>
+                      <% const itemTotal = (Number(item.price) || 0) * (Number(item.quantity) || 0); %>
+                      <% orderTotal += itemTotal; %>
                       <li class="product-item">
                         <span class="product-name"><%= item.productId?.name || t('profile.productUnavailable') %></span>
-                        <span class="product-price">$<%= (item.productId?.price || 0).toFixed(2) %> x <%= item.quantity %></span>
+                        <span class="product-price"><%= Number(item.price).toFixed(2) %> DH x <%= item.quantity %> = <%= itemTotal.toFixed(2) %> DH</span>
                       </li>
-                    <% }) %>
+                    <% }); %>
                   </ul>
+                  <div class="order-total" style="margin-top: 1rem; text-align: right; font-weight: bold;">
+                    <%= t('profile.orderTotal') %>: <%= orderTotal.toFixed(2) %> DH
+                  </div>
                 </div>
 
                 <div class="order-actions">

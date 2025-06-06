@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Add Promo Code | Admin</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Montserrat:wght@300;400&display=swap">
+  <style>
+    :root {
+      --deep-blue: #0a2440;
+      --cream: #f0f5ff;
+      --gold: #b4c4d6;
+      --light-gray: #e0e5f0;
+      --light-gold: #f9f0db;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      min-height: 100vh;
+      background: var(--cream);
+      color: var(--deep-blue);
+      padding: 2rem;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .header h1 {
+      font-family: 'Cormorant Garamond', serif;
+      color: var(--deep-blue);
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      letter-spacing: 1px;
+    }
+
+    .form-group {
+      margin-bottom: 2rem;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 0.75rem;
+      font-size: 0.95rem;
+      color: var(--deep-blue);
+      font-weight: 500;
+    }
+
+    .helper-text {
+      display: block;
+      font-size: 0.85rem;
+      color: #666;
+      margin-top: 0.25rem;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid var(--light-gray);
+      border-radius: 4px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1rem;
+      transition: border-color 0.3s;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--gold);
+    }
+
+    .submit-btn {
+      display: inline-block;
+      padding: 0.875rem 2rem;
+      background: var(--deep-blue);
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .submit-btn:hover {
+      background: #1a3d66;
+    }
+
+    .back-button {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.75rem 1.5rem;
+      background: var(--light-gray);
+      color: var(--deep-blue);
+      text-decoration: none;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      margin-top: 2rem;
+      transition: background-color 0.3s;
+    }
+
+    .back-button:hover {
+      background: var(--gold);
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 1rem;
+      }
+
+      .container {
+        padding: 1.5rem;
+      }
+
+      .header h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <h1>Add New Promo Code</h1>
+    </header>
+
+    <form action="/admin/add-promo" method="POST">
+      <div class="form-group">
+        <label class="form-label">Promo Code</label>
+        <input type="text" 
+               name="code" 
+               class="form-input" 
+               required 
+               placeholder="e.g., SUMMER25"
+               pattern="[A-Z0-9]+"
+               title="Uppercase letters and numbers only"
+        >
+        <span class="helper-text">Use uppercase letters and numbers only (e.g., WELCOME10, SUMMER25)</span>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Discount Percentage</label>
+        <input type="number" 
+               name="discountPercent" 
+               class="form-input" 
+               required 
+               min="1" 
+               max="99"
+               placeholder="Enter a value between 1-99"
+        >
+        <span class="helper-text">Enter a value between 1 and 99</span>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Expiry Date</label>
+        <input type="date" 
+               name="expiresAt" 
+               class="form-input" 
+               required
+               min="<%= new Date().toISOString().split('T')[0] %>"
+        >
+        <span class="helper-text">Select the date when this promo code will expire</span>
+      </div>
+
+      <button type="submit" class="submit-btn">Create Promo Code</button>
+    </form>
+
+    <a href="/admin/promo-codes" class="back-button">⬅ Back to Promo Codes</a>
+  </div>
+</body>
+</html>

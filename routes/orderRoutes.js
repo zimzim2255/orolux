@@ -11,42 +11,49 @@ router.get("/checkout", (req, res) => {
 router.post("/order", async (req, res) => {
   try {
     const userId = req.session.user?.id || req.session.user?._id;
-    
-    // Get cart items
+      // Get cart items
     const cartItems = await Cart.find({ userId }).populate('productId');
     
     // Calculate total
     let total = 0;
     const products = cartItems.map(item => {
-      const itemTotal = item.quantity * item.productId.price;
+      if (!item.productId || typeof item.productId.price !== 'number') {
+        throw new Error('Invalid product in cart');
+      }
+      const itemTotal = Number(item.quantity) * Number(item.productId.price);
       total += itemTotal;
       return {
         productId: item.productId._id,
-        quantity: item.quantity,
-        price: item.productId.price
+        quantity: Number(item.quantity),
+        price: Number(item.productId.price)
       };
-    });
+    });    // Use discounted total if promo code was applied
+    const finalTotal = req.session.discountedTotal || total;
 
     // Create order
     const order = new Order({
       deliveryInfo: req.body,
       userId: userId,
       products: products,
-      total: total,
+      total: finalTotal,
+      promoCode: req.session.promoCode,
+      originalTotal: total,
       status: "Pending"
     });
 
-    await order.save();
-
-    // Update user's totalSpent
+    await order.save();    // Update user's totalSpent - don't update on order creation since it starts as Pending
     if (userId) {
-      await User.findByIdAndUpdate(userId, {
-        $inc: { totalSpent: total }
-      });
-    }
-
-    // Clear the cart
+      const user = await User.findById(userId);
+      if (!user.totalSpent) {
+        await User.findByIdAndUpdate(userId, { $set: { totalSpent: 0 } });
+      }
+    }// Clear the cart
     await Cart.deleteMany({ userId });
+
+    // Clear promo code data
+    delete req.session.promoApplied;
+    delete req.session.discountedTotal;
+    delete req.session.promoCode;
 
     res.redirect("/order-success");
   } catch (error) {

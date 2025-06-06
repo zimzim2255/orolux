@@ -14,9 +14,15 @@ router.get("/cart", ensureUser, async (req, res) => {
   const userId = req.session.user && (req.session.user.id || req.session.user._id);
   if (!userId) {
     return res.redirect("/login");
-  }
-  const cartItems = await Cart.find({ userId }).populate("productId");
-  res.render("cart", { cart: cartItems });
+  }  const cartItems = await Cart.find({ userId }).populate("productId");  res.render("cart", { 
+    cart: cartItems,
+    discountedTotal: req.session.discountedTotal || null,
+    error: req.session.error,
+    promoCode: req.session.promoCode
+  });
+  
+  // Clear flash messages
+  delete req.session.error;
 });
 
 // Add to Cart
@@ -45,7 +51,18 @@ router.post("/cart/update/:id", ensureUser, async (req, res) => {
 
 // Remove Item from Cart
 router.get("/cart/remove/:id", ensureUser, async (req, res) => {
+  const userId = req.session.user && (req.session.user.id || req.session.user._id);
   await Cart.findByIdAndDelete(req.params.id);
+  
+  // Check if cart is empty
+  const remainingItems = await Cart.find({ userId });
+  if (remainingItems.length === 0) {
+    // Clear promo code data if cart is empty
+    delete req.session.promoApplied;
+    delete req.session.discountedTotal;
+    delete req.session.promoCode;
+  }
+  
   res.redirect("/cart");
 });
 

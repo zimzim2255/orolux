@@ -164,12 +164,11 @@
                                     <div class="absolute top-4 right-4 bg-black text-white px-3 py-1 text-xs uppercase tracking-wider z-10">New</div>
                                 <% } %>
                                 <div class="product-grid-item__images relative aspect-square overflow-hidden">
-                                    <img src="<%= product.image %>" 
-                                         alt="<%= product.name %>" 
-                                         class="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110">
-                                </div>
-                                <div class="product__grid__info p-6 text-center">                                    <h3 class="product__grid__title text-lg font-light text-blue-900 mb-2"><%= product.name %></h3>
-                                    <p class="text-blue-700/70 font-semibold">$<%= product.price.toLocaleString() %> USD</p>
+                    <img src="/images/<%= product.image %>" 
+                         alt="<%= product.name %>" 
+                         class="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110">
+                </div>                                <div class="product__grid__info p-6 text-center">                                    <h3 class="product__grid__title text-lg font-light text-blue-900 mb-2"><%= product.name %></h3>
+                                    <p class="text-blue-700/70 font-semibold"><%= product.price.toLocaleString() %> DH</p>
                                 </div>
                             </a>
                         </div>

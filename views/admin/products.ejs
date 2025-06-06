@@ -281,10 +281,9 @@
         <th>Actions</th>
       </tr>
       <% products.forEach(product => { %>
-        <tr>
-          <td><%= product._id %></td>
+        <tr>          <td><%= product._id %></td>
           <td><%= product.name %></td>
-          <td class="price">$<%= product.price.toFixed(2) %></td>
+          <td class="price"><%= product.price.toFixed(2) %> DH</td>
           <td><%= product.description %></td>
           <td><img src="/images/<%= product.image %>" width="80" alt="<%= product.name %>"></td>          <td class="action-links">
             <a href="/admin/edit-product/<%= product._id %>">✏️ Edit</a>

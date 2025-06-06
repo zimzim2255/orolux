@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Promo Codes | Admin</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Montserrat:wght@300;400&display=swap">
+  <style>
+    :root {
+      --deep-blue: #0a2440;
+      --cream: #f0f5ff;
+      --gold: #b4c4d6;
+      --light-gray: #e0e5f0;
+      --light-gold: #f9f0db;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      min-height: 100vh;
+      background: var(--cream);
+      color: var(--deep-blue);
+      padding: 2rem;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 3rem;
+      position: relative;
+    }
+
+    .header h1 {
+      font-family: 'Cormorant Garamond', serif;
+      color: var(--deep-blue);
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      letter-spacing: 1px;
+    }
+
+    .actions-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .add-promo-button {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.75rem 1.5rem;
+      background: var(--deep-blue);
+      color: white;
+      text-decoration: none;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      transition: background-color 0.3s;
+    }
+
+    .add-promo-button:hover {
+      background: #1a3d66;
+    }
+
+    .promo-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      margin-bottom: 2rem;
+    }
+
+    .promo-table th,
+    .promo-table td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid var(--light-gray);
+    }
+
+    .promo-table th {
+      background: var(--light-gray);
+      font-weight: 500;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+    }
+
+    .promo-table tr:hover {
+      background: var(--light-gold);
+    }
+
+    .status-active {
+      color: #28a745;
+      font-weight: 500;
+    }
+
+    .status-expired {
+      color: #dc3545;
+      font-weight: 500;
+    }
+
+    .action-links a {
+      color: #dc3545;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.3s;
+    }
+
+    .action-links a:hover {
+      color: #bd2130;
+    }
+
+    .back-button {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.75rem 1.5rem;
+      background: var(--light-gray);
+      color: var(--deep-blue);
+      text-decoration: none;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      transition: background-color 0.3s;
+    }
+
+    .back-button:hover {
+      background: var(--gold);
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 1rem;
+      }
+
+      .container {
+        padding: 1rem;
+      }
+
+      .actions-row {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .add-promo-button {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .promo-table {
+        display: block;
+        overflow-x: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <h1>Promo Code Management</h1>
+    </header>
+
+    <div class="actions-row">
+      <a href="/admin/add-promo" class="add-promo-button">➕ Add New Promo Code</a>
+    </div>
+
+    <table class="promo-table">
+      <thead>
+        <tr>
+          <th>Code</th>
+          <th>Discount</th>
+          <th>Expiry Date</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% promoCodes.forEach(code => { %>
+          <% const isExpired = new Date(code.expiresAt) < new Date(); %>
+          <tr>
+            <td><strong><%= code.code %></strong></td>
+            <td><%= code.discountPercent %>%</td>
+            <td><%= new Date(code.expiresAt).toLocaleDateString() %></td>
+            <td>
+              <span class="<%= isExpired ? 'status-expired' : 'status-active' %>">
+                <%= isExpired ? 'Expired' : 'Active' %>
+              </span>
+            </td>
+            <td class="action-links">
+              <a href="/admin/delete-promo/<%= code._id %>" 
+                 onclick="return confirm('Are you sure you want to delete this promo code? This action cannot be undone.')">
+                🗑️ Delete
+              </a>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+
+    <a href="/admin/dashboard" class="back-button">⬅ Back to Dashboard</a>
+  </div>
+</body>
+</html>
