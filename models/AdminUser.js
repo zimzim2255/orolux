@@ -4,7 +4,13 @@ const bcrypt = require("bcrypt");
 const adminSchema = new mongoose.Schema({
   username: String,
   email: String,
-  password: String
+  password: String,
+  loginAttempts: { type: Number, default: 0 },
+  lockUntil: { type: Date },
+  isLocked: { 
+    type: Boolean,
+    default: false
+  }
 });
 
 adminSchema.pre("save", async function (next) {
