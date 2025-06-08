@@ -197,10 +197,10 @@
             password: $('#password').val()
           },
           success: function(response) {
-            if (response === "Invalid Credentials") {
-              errorAlert.text("Invalid email or password").fadeIn();
-            } else {
+            if (response.success) {
               window.location.href = '/admin/dashboard';
+            } else {
+              errorAlert.text(response.message || "Invalid email or password").fadeIn();
             }
           },
           error: function() {

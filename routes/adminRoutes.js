@@ -29,7 +29,7 @@ router.post("/admin/login", async (req, res) => {
     // Check if account is locked
     if (admin && admin.isLocked) {
       if (admin.lockUntil && admin.lockUntil > new Date()) {
-        return res.status(403).send("Account is locked. Please try again later.");
+        return res.json({ success: false, message: "Account is locked. Please try again later." });
       } else {
         // Reset lock if lockUntil has expired
         admin.isLocked = false;
@@ -38,7 +38,7 @@ router.post("/admin/login", async (req, res) => {
       }
     }
 
-    if (admin && (await bcrypt.compare(req.body.password, admin.password))) {
+    if (admin && (await admin.comparePassword(req.body.password))) {
       // Reset login attempts on successful login
       admin.loginAttempts = 0;
       admin.isLocked = false;
@@ -57,12 +57,12 @@ router.post("/admin/login", async (req, res) => {
           admin.isLocked = true;
           admin.lockUntil = new Date(Date.now() + 30 * 60000); // Lock for 30 minutes
           await admin.save();
-          return res.status(403).send("Account locked for 30 minutes due to too many failed attempts.");
+          return res.json({ success: false, message: "Account locked for 30 minutes due to too many failed attempts." });
         }
         
         await admin.save();
       }
-      res.status(401).send("Invalid Credentials");
+      res.json({ success: false, message: "Invalid email or password" });
     }
   } catch (error) {
     console.error(error);

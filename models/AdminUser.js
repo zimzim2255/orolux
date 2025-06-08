@@ -8,7 +8,10 @@ const adminSchema = new mongoose.Schema({
     required: true,
     unique: true
   },
-  password: String,
+  password: {
+    type: String,
+    required: true
+  },
   loginAttempts: { type: Number, default: 0 },
   lockUntil: { type: Date },
   isLocked: { 
@@ -17,11 +20,23 @@ const adminSchema = new mongoose.Schema({
   }
 });
 
-adminSchema.pre("save", async function (next) {
-  if (this.isModified("password")) {
-    this.password = await bcrypt.hash(this.password, 10);
+// Add methods for password verification
+adminSchema.methods.comparePassword = async function(candidatePassword) {
+  return await bcrypt.compare(candidatePassword, this.password);
+};
+
+adminSchema.pre("save", async function(next) {
+  // Only hash the password if it has been modified (or is new)
+  if (!this.isModified("password")) return next();
+  
+  try {
+    // Generate a salt and hash the password
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+    next();
+  } catch (error) {
+    next(error);
   }
-  next();
 });
 
 module.exports = mongoose.model("AdminUser", adminSchema);

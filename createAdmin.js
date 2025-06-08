@@ -8,6 +8,6 @@ mongoose.connect(process.env.MONGO_URI || "YOUR_MONGO_URI_HERE").then(async () =
     password: "Q!7v9z$Lp2@eR4wX" // Strong password
   });
   await admin.save();
-  console.log("Admin user created: orolux.stor1@gmail.com / Q!7v9z$Lp2@eR4wX");
+  console.log("Admin user created: orolux.store1@gmail.com / Q!7v9z$Lp2@eR4wX");
   mongoose.disconnect();
 });
