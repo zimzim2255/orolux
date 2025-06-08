@@ -144,7 +144,7 @@
 <%- include('partials/header') %>
 <div class="cart-container">
   <h2 class="cart-title">Your Shopping Cart</h2>
-  <% if (cart.length === 0) { %>
+  <% if (!cart.items || cart.items.length === 0) { %>
     <div class="cart-empty">
       <p>Your cart is empty.</p>
       <a href="/products" class="continue-shopping">Continue Shopping</a>
@@ -159,8 +159,8 @@
         <th>Action</th>
       </tr>
       <% let grandTotal = 0; %>
-      <% cart.forEach(item => { %>
-        <% const product = item.productId || item.product; %>
+      <% cart.items.forEach(item => { %>
+        <% const product = item.productId; %>
         <% if (!product) { return; } %>
         <% const itemTotal = product.price * item.quantity; %>
         <% grandTotal += itemTotal; %>
@@ -169,7 +169,12 @@
               <img src="<%= product.image %>" 
                    class="product-image" 
                    alt="<%= product.name %>">
-              <span class="product-name"><%= product.name %></span>
+              <span class="product-name">
+                <%= product.name %>
+                <% if (item.selectedColor) { %>
+                  <br><small style="color: #666;">Color: <%= item.selectedColor %></small>
+                <% } %>
+              </span>
             </div>
           </td>
           <td><%= product.price.toFixed(2) %> DH</td>

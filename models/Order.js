@@ -2,8 +2,9 @@ const mongoose = require("mongoose");
 
 const orderSchema = new mongoose.Schema({
   userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User"
+    type: mongoose.Schema.Types.Mixed, // Accept ObjectId or guestId string
+    ref: "User",
+    required: false // Allow guest orders
   },
   deliveryInfo: {
     name: String,
@@ -13,7 +14,8 @@ const orderSchema = new mongoose.Schema({
   },
   products: [{
     productId: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
-    quantity: Number
+    quantity: Number,
+    selectedColor: String
   }],
   total: Number,
   status: { type: String, default: "Pending" },

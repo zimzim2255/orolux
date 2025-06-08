@@ -3,7 +3,11 @@ const bcrypt = require("bcrypt");
 
 const adminSchema = new mongoose.Schema({
   username: String,
-  email: String,
+  email: {
+    type: String,
+    required: true,
+    unique: true
+  },
   password: String,
   loginAttempts: { type: Number, default: 0 },
   lockUntil: { type: Date },

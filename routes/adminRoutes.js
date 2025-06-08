@@ -52,8 +52,8 @@ router.post("/admin/login", async (req, res) => {
         // Increment login attempts
         admin.loginAttempts += 1;
         
-        // Lock account if attempts exceed 10
-        if (admin.loginAttempts >= 10) {
+        // Lock account if attempts exceed 5
+        if (admin.loginAttempts >= 5) {
           admin.isLocked = true;
           admin.lockUntil = new Date(Date.now() + 30 * 60000); // Lock for 30 minutes
           await admin.save();
@@ -262,7 +262,7 @@ router.get("/admin/products", ensureAdmin, async (req, res) => {
 
 // Add Product Form
 router.get("/admin/add-product", ensureAdmin, (req, res) => {
-  res.render("admin/add-products");
+  res.render("admin/add-products", { error: null });
 });
 
 // Save New Product
@@ -273,10 +273,19 @@ router.post("/admin/add-product", ensureAdmin, async (req, res) => {
     upload.single('image')(req, res, async (err) => {
       if (err) {
         console.error('Upload error:', err);
-        return res.status(400).send(err.message);
+        return res.render("admin/add-products", { 
+          error: 'Error uploading image: ' + err.message 
+        });
       }
 
       try {
+        // Validate required fields
+        if (!req.body.name || !req.body.price || !req.body.description || !req.file) {
+          return res.render("admin/add-products", { 
+            error: 'Please fill in all required fields and upload an image'
+          });
+        }
+
         let imageUrl = '';
         if (req.file) {
           const result = await req.app.locals.uploadToCloudinary(req.file);
@@ -284,7 +293,9 @@ router.post("/admin/add-product", ensureAdmin, async (req, res) => {
         }
 
         const productData = {
-          ...req.body,
+          name: req.body.name,
+          price: parseFloat(req.body.price),
+          description: req.body.description,
           image: imageUrl
         };
 
@@ -293,12 +304,16 @@ router.post("/admin/add-product", ensureAdmin, async (req, res) => {
         res.redirect("/admin/products");
       } catch (error) {
         console.error('Product creation error:', error);
-        res.status(500).send("Error adding product");
+        res.render("admin/add-products", { 
+          error: 'Error creating product: ' + error.message 
+        });
       }
     });
   } catch (error) {
-    console.error(error);
-    res.status(500).send("Error adding product");
+    console.error('Server error:', error);
+    res.render("admin/add-products", { 
+      error: 'Server error: ' + error.message 
+    });
   }
 });
 

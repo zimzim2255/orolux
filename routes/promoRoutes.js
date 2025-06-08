@@ -3,16 +3,26 @@ const router = express.Router();
 const PromoCode = require("../models/PromoCode");
 const Cart = require("../models/Cart");
 
-// Middleware to protect user routes
-function ensureUser(req, res, next) {
-  if (!req.session.user) return res.redirect("/login");
+// Remove ensureUser from promoRoutes and allow guests to apply promo codes
+function getOrCreateGuestId(req) {
+  if (!req.session.guestId) {
+    req.session.guestId = `guest_${Date.now()}_${Math.floor(Math.random()*10000)}`;
+  }
+  return req.session.guestId;
+}
+
+function ensureUserOrGuest(req, res, next) {
+  if (!req.session.user && !req.session.guestId) {
+    getOrCreateGuestId(req);
+  }
   next();
 }
 
 // Apply Promo Code
-router.post("/cart/apply-promo", ensureUser, async (req, res) => {
+router.post("/cart/apply-promo", ensureUserOrGuest, async (req, res) => {
   try {
-    const { promoCode } = req.body;    if (!promoCode || typeof promoCode !== 'string') {
+    const { promoCode } = req.body;
+    if (!promoCode || typeof promoCode !== 'string') {
       req.session.error = "Please enter a valid promo code";
       return res.redirect("/cart");
     }
@@ -36,16 +46,16 @@ router.post("/cart/apply-promo", ensureUser, async (req, res) => {
     if (!code.discountPercent || code.discountPercent <= 0 || code.discountPercent >= 100) {
       req.session.error = "Invalid discount configuration";
       return res.redirect("/cart");
-    }const userId = req.session.user && (req.session.user.id || req.session.user._id);
-    const cartItems = await Cart.find({ userId }).populate("productId");
+    }    const userId = req.session.user && (req.session.user.id || req.session.user._id) || req.session.guestId;
+    const cart = await Cart.findOne({ userId }).populate('items.productId');
 
-    if (!cartItems || cartItems.length === 0) {
+    if (!cart || !cart.items || cart.items.length === 0) {
       req.session.error = "Your cart is empty";
       return res.redirect("/cart");
     }
 
     // Calculate total
-    let grandTotal = cartItems.reduce((sum, item) => {
+    let grandTotal = cart.items.reduce((sum, item) => {
       // Check if product exists and has a price
       if (!item.productId || typeof item.productId.price !== 'number') {
         throw new Error('Invalid product in cart');
@@ -57,9 +67,13 @@ router.post("/cart/apply-promo", ensureUser, async (req, res) => {
     const discount = code.discountPercent / 100;
     const discountedTotal = grandTotal * (1 - discount);
 
+    // Store promo code info in session
     req.session.promoApplied = true;
     req.session.discountedTotal = discountedTotal;
     req.session.promoCode = promoCode;
+
+    // Clear any previous errors
+    delete req.session.error;
 
     res.redirect("/cart");
   } catch (error) {
