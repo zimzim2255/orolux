@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Order Details | OROLUX</title>
+  <%- include('partials/head') %>
+  <style>
+    .order-details-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 8rem 2rem 4rem;
+    }
+
+    .order-header {
+      margin-bottom: 3rem;
+      text-align: center;
+    }
+
+    .order-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.5rem;
+      font-weight: 300;
+      color: var(--deep-blue);
+      margin-bottom: 1rem;
+      letter-spacing: 2px;
+    }
+
+    .order-status {
+      display: inline-block;
+      padding: 0.5rem 1.5rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      text-transform: capitalize;
+      letter-spacing: 1px;
+      margin-top: 1rem;
+    }
+
+    .order-status.pending { background: #fff3cd; color: #856404; }
+    .order-status.processing { background: #cce5ff; color: #004085; }
+    .order-status.completed { background: #d4edda; color: #155724; }
+    .order-status.cancelled { background: #f8d7da; color: #721c24; }
+
+    .order-section {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 2px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      margin-bottom: 2rem;
+    }
+
+    .section-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: var(--deep-blue);
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--gold);
+    }
+
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+    }
+
+    .info-label {
+      color: #666;
+      font-weight: 500;
+    }
+
+    .info-value {
+      color: var(--deep-blue);
+    }
+
+    .products-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .product-item {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 1rem;
+      padding: 1rem;
+      border-bottom: 1px solid #eee;
+      align-items: center;
+    }
+
+    .product-item:last-child {
+      border-bottom: none;
+    }
+
+    .products-header {
+      font-weight: 500;
+      color: #666;
+      padding: 0.5rem 1rem;
+      border-bottom: 2px solid #eee;
+    }
+
+    .total-section {
+      text-align: right;
+      padding-top: 1rem;
+      border-top: 2px solid #eee;
+    }
+
+    .total-amount {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--deep-blue);
+    }
+
+    .back-btn {
+      display: inline-block;
+      padding: 0.8rem 2rem;
+      color: var(--deep-blue);
+      text-decoration: none;
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+      transition: all 0.3s;
+      margin-top: 2rem;
+    }
+
+    .back-btn:hover {
+      transform: translateX(-5px);
+    }
+
+    @media (max-width: 768px) {
+      .product-item {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+      }
+
+      .products-header {
+        display: none;
+      }
+
+      .info-row {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <%- include('partials/header') %>
+
+  <div class="order-details-container">
+    <div class="order-header">
+      <h1 class="order-title">Order Details</h1>
+      <div class="order-id">Order #<%= order._id %></div>
+      <div class="order-status <%= order.status.toLowerCase() %>"><%= order.status %></div>
+    </div>
+
+    <div class="order-section">
+      <h2 class="section-title">Delivery Information</h2>
+      <div class="info-row">
+        <span class="info-label">Name:</span>
+        <span class="info-value"><%= order.deliveryInfo.name %></span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Phone:</span>
+        <span class="info-value"><%= order.deliveryInfo.phone %></span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Address:</span>
+        <span class="info-value"><%= order.deliveryInfo.address %></span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Email:</span>
+        <span class="info-value"><%= order.deliveryInfo.email || 'Not provided' %></span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Order Date:</span>
+        <span class="info-value"><%= new Date(order.createdAt).toLocaleString() %></span>
+      </div>
+    </div>
+
+    <div class="order-section">
+      <h2 class="section-title">Order Items</h2>
+      <div class="products-list">
+        <div class="product-item products-header">
+          <div>Product</div>
+          <div>Unit Price</div>
+          <div>Quantity</div>
+          <div>Total</div>
+        </div>
+        <% let orderTotal = 0; %>        <% order.products.forEach(item => { %>
+          <% const price = item.price || (item.productId && item.productId.price) || 0; %>
+          <% const itemTotal = price * item.quantity; %>
+          <% orderTotal += itemTotal; %>
+          <div class="product-item">
+            <div class="info-value"><%= item.productId?.name || 'Product not available' %></div>
+            <div class="info-value"><%= price.toFixed(2) %> DH</div>
+            <div class="info-value"><%= item.quantity %></div>
+            <div class="info-value"><%= itemTotal.toFixed(2) %> DH</div>
+          </div>
+        <% }); %>
+        <div class="total-section">
+          <% if (order.promoCode) { %>
+            <div style="margin-bottom: 0.5rem; color: #2d7a2d;">
+              Promo code applied: <%= order.promoCode %>
+              <% if (order.originalTotal) { %>
+                <br>
+                <span style="text-decoration: line-through; color: #666;">
+                  Original Total: <%= order.originalTotal.toFixed(2) %> DH
+                </span>
+              <% } %>
+            </div>
+          <% } %>
+          <div class="total-amount">Total: <%= order.total.toFixed(2) %> DH</div>
+        </div>
+      </div>
+    </div>
+
+    <a href="/profile" class="back-btn">← Back to Profile</a>
+  </div>
+
+  <%- include('partials/footer') %>
+</body>
+</html>

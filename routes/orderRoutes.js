@@ -72,4 +72,32 @@ router.get("/order-success", (req, res) => {
   res.render("order-success", { user: req.session.user });
 });
 
+// Get order details
+router.get("/order/:id", async (req, res) => {
+  try {
+    const orderId = req.params.id;
+    const order = await Order.findById(orderId).populate('products.productId');
+
+    if (!order) {
+      return res.status(404).send("Order not found");
+    }
+
+    // Check if the order belongs to the current user or if user is admin
+    const isAdmin = req.session.isAdmin;
+    const userId = req.session.user?.id || req.session.user?._id || req.session.guestId;
+
+    if (!isAdmin && order.userId.toString() !== userId) {
+      return res.status(403).send("You don't have permission to view this order");
+    }
+
+    res.render("order-details", { 
+      order,
+      user: req.session.user
+    });
+  } catch (error) {
+    console.error("Error fetching order details:", error);
+    res.status(500).send("Error fetching order details");
+  }
+});
+
 module.exports = router;
